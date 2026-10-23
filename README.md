@@ -51,12 +51,3 @@ Plataforma web institucional que presenta los servicios médicos para obtener o 
 ├── styles/               # Estilos globales
 └── next.config.mjs       # Configuración de Next.js (export estático)
 ```
-
-## Comandos
-
-```bash
-npm install      # Instalar dependencias
-npm run dev      # Desarrollo
-npm run build    # Build estático (genera out/)
-npm run lint     # Lint
-```

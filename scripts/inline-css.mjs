@@ -7,12 +7,23 @@ const outDir = resolve(__dirname, '../out')
 
 const cssCache = new Map()
 
+function resolveCssUrls(css, href) {
+  const base = new URL(href, 'https://assets.local')
+
+  return css.replace(/url\(\s*(['"]?)([^)'"]+)\1\s*\)/g, (match, quote, value) => {
+    if (/^(data:|https?:|\/\/|\/|#)/i.test(value)) return match
+
+    const resolved = new URL(value, base)
+    return `url(${quote}${resolved.pathname}${resolved.search}${resolved.hash}${quote})`
+  })
+}
+
 function loadCss(href) {
   if (cssCache.has(href)) return cssCache.get(href)
   let css = ''
   const filePath = join(outDir, href.replace(/^\//, ''))
   if (existsSync(filePath)) {
-    css = readFileSync(filePath, 'utf8')
+    css = resolveCssUrls(readFileSync(filePath, 'utf8'), href)
   }
   cssCache.set(href, css)
   return css

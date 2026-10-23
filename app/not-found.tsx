@@ -17,7 +17,7 @@ export default function NotFound() {
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-[40vw] font-black text-[#158cca]/5 leading-none select-none tracking-tighter"
         >
           404
@@ -46,7 +46,7 @@ export default function NotFound() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.35 }}
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-black text-[#0f172a] mb-6 leading-tight uppercase tracking-tighter">

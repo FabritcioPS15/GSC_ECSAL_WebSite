@@ -13,8 +13,8 @@ import { TopHeader } from '@/components/top-header'
 const NAV_ITEMS = [
   { id: 'inicio', label: 'Inicio', href: '/' },
   { id: 'nosotros', label: 'Nosotros', href: '/nosotros' },
-  { id: 'servicios', label: 'Servicios', href: '/servicios' },
   { id: 'sedes', label: 'Sedes', href: '/sedes' },
+  { id: 'servicios', label: 'Servicios', href: '/servicios' },
 ]
 
 const SERVICES_DROPDOWN = [
@@ -64,7 +64,7 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
         className="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm"
       >
         <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between">
@@ -153,14 +153,14 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
               {[
                 { href: "/", text: "Inicio" },
                 { href: "/nosotros", text: "Nosotros" },
-                { href: home ? "/#precios" : "/servicios", text: "Servicios" },
-                { href: "/sedes", text: "Sedes" }
+                { href: "/sedes", text: "Sedes" },
+                { href: "/servicios", text: "Servicios" }
               ].map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.3, delay: index * 0.04 }}
                 >
                   <Link
                     href={item.href}
@@ -175,7 +175,7 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                transition={{ duration: 0.3, delay: 0.15 }}
                 className="pt-4"
               >
                 <Link href="/contacto" onClick={() => setIsMobileMenuOpen(false)}>

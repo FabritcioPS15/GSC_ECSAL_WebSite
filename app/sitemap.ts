@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { CENTROS } from '@/lib/directorio'
 
 export const dynamic = 'force-static'
 
@@ -60,5 +61,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    ...CENTROS.map((centro) => ({
+      url: `${baseUrl}/sedes/${centro.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
   ]
 }

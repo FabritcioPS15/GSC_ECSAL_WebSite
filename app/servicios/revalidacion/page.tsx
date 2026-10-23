@@ -23,7 +23,7 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.05
     }
   }
 }
@@ -153,30 +153,30 @@ function ServiceContent() {
       <Navbar dark />
 
       {/* Hero Banner Section (Updated Style) */}
-      <section className="bg-[#0f172a] py-10 md:py-16 px-4 overflow-hidden relative">
+      <section className="bg-[#0f172a] py-10 md:py-14 px-4 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.35 }}
           >
-            <div className="hidden md:flex text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] items-center gap-2 justify-center">
+            <div className="hidden md:flex text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
               SERVICIO ESPECIALIZADO
               <span className="w-8 h-px bg-[#a3c435]"></span>
             </div>
-            <div className="flex items-center justify-center gap-2 mb-4 text-[10px] font-black uppercase tracking-widest text-white/40">
+            <div className="flex items-center justify-start gap-2 mb-4 text-[10px] font-black uppercase tracking-widest text-white/40">
               <Link href="/" className="hover:text-[#a3c435] transition-colors">Inicio</Link>
               <ChevronRight size={10} />
               <Link href="/servicios" className="hover:text-[#a3c435] transition-colors">Servicios</Link>
               <ChevronRight size={10} />
               <span className="text-[#a3c435]">Revalidación</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-3 leading-tight">
               Renovar <br /> <span className="text-[#158cca]">Licencia de Conducir</span>
             </h1>
-            <p className="hidden md:block text-white/60 text-lg max-w-2xl mx-auto font-medium">
+            <p className="hidden md:block text-white/60 text-sm md:text-base max-w-2xl font-medium">
               Renueva tu licencia de conducir de forma rápida, segura y con certificación inmediata ante el MTC.
             </p>
           </motion.div>

@@ -95,28 +95,28 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
     <div className="w-full bg-white font-sans text-slate-900">
       <Navbar active="contacto" />
 
-      <section className="bg-[#0f172a] py-16 px-4 overflow-hidden relative">
+      <section className="bg-[#0f172a] py-10 md:py-14 px-4 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.35 }}
           >
-            <div className="text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] flex items-center gap-2 justify-center">
+            <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
               ESTAMOS PARA AYUDARTE
               <span className="w-8 h-px bg-[#a3c435]"></span>
             </div>
-            <div className="flex items-center justify-center gap-2 mb-6 text-[10px] font-black uppercase tracking-widest text-white/40">
+            <div className="flex items-center justify-start gap-2 mb-3 text-[10px] font-black uppercase tracking-widest text-white/40">
               <Link href="/" className="hover:text-[#a3c435] transition-colors">Inicio</Link>
               <ChevronRight size={10} />
               <span className="text-[#a3c435]">Contacto</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-8 leading-none">
-              Citas para <br /> <span className="text-[#158cca]">Médico Brevete</span>
+            <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
+              Citas para <span className="text-[#158cca]">Médico Brevete</span>
             </h1>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto font-medium">
+            <p className="text-white/60 text-sm md:text-base max-w-2xl font-medium">
               Resuelve tus dudas o agenda tu cita directamente con nuestro equipo de atención al cliente.
             </p>
           </motion.div>
@@ -179,7 +179,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.3 }}
                   className="space-y-12"
                 >
                   <div>
@@ -224,7 +224,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
                     className="p-8 bg-[#158cca] text-white relative overflow-hidden group"
                   >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 -rotate-45 translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-colors" />

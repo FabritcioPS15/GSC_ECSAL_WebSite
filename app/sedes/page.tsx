@@ -1,310 +1,387 @@
-'use client'
+﻿'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Check, Map as MapIcon, ChevronRight, Clock, MapPin, Phone } from 'lucide-react'
+import {
+  CalendarCheck,
+  Check,
+  ChevronRight,
+  Clock,
+  Ear,
+  Eye,
+  FlaskConical,
+  Info,
+  MapPin,
+  MessageSquareWarning,
+  Search,
+  Stethoscope,
+  Brain,
+  X,
+} from 'lucide-react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { FaWhatsapp } from 'react-icons/fa'
-import { SiGooglemaps, SiWaze } from 'react-icons/si'
-import 'leaflet/dist/leaflet.css'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { CentroCard } from '@/components/directorio/centro-card'
+import {
+  CENTROS,
+  CIUDADES,
+  EVALUACIONES,
+  FECHA_ACTUALIZACION,
+  TARIFAS,
+} from '@/lib/directorio'
 
-export default function Sedes() {
-  const [selectedSede, setSelectedSede] = useState(0)
-  const mapContainer = useRef<HTMLDivElement>(null)
-  const map = useRef<any>(null)
-  const L = useRef<any>(null)
-  const markersLayer = useRef<any>(null)
+const ICONOS_EVALUACION = [
+  <CalendarCheck size={20} key="matricula" />,
+  <FlaskConical size={20} key="laboratorio" />,
+  <Brain size={20} key="psicologia" />,
+  <Eye size={20} key="oftalmologia" />,
+  <Ear size={20} key="otorrino" />,
+  <Stethoscope size={20} key="medicina" />,
+]
 
-  const sedes = [
-    { 
-      name: "Sede Lima (Izaguirre)", 
-      address: "Av. Carlos Izaguirre 108, Independencia 15311",
-      phone: "(01) 642-9971",
-      whatsapp: "999 888 777",
-      hours: "Lun-Sáb: 8am - 6pm",
-      services: ["Evaluaciones completas", "Certificados MTC", "Atención prioritaria"]
-    },
-    { 
-      name: "Sede Andahuaylas", 
-      address: "Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas",
-      phone: "(054) 234-567",
-      whatsapp: "944 777 666",
-      hours: "Lun-Sáb: 9am - 6pm",
-      services: ["Evaluaciones completas", "Zona sur", "Atención especializada"]
-    },
-    { 
-      name: "Sede Ayacucho", 
-      address: "Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho",
-      phone: "(044) 345-678",
-      whatsapp: "944 666 555",
-      hours: "Lun-Vie: 8am - 5pm",
-      services: ["Evaluaciones básicas", "Zona norte", "Fácil acceso"]
-    }
-  ]
+function normalizar(texto: string) {
+  return texto
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
 
-  const sedesCoords: [number, number][] = [
-    [-11.988863, -77.057482],
-    [-13.651203637235811, -73.36337728787365],
-    [-13.156021376519789, -74.21794367539681]
-  ]
+export default function Directorio() {
+  const [query, setQuery] = useState('')
+  const [ciudad, setCiudad] = useState('todas')
+  const [soloSabado, setSoloSabado] = useState(false)
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !mapContainer.current) return
-
-    const initMap = async () => {
-      const leaflet = await import('leaflet')
-      L.current = leaflet
-
-      if (map.current) return
-
-      map.current = leaflet.map(mapContainer.current!, {
-        attributionControl: false,
-        zoomControl: false
-      }).setView(sedesCoords[0], 14)
-
-      leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(map.current)
-
-      leaflet.control.zoom({ position: 'bottomright' }).addTo(map.current)
-
-      markersLayer.current = leaflet.layerGroup().addTo(map.current)
-      updateMarkers()
-    }
-
-    initMap()
-
-    return () => {
-      if (map.current) {
-        map.current.remove()
-        map.current = null
-      }
-    }
+    const busquedaInicial = new URLSearchParams(window.location.search).get('q')
+    if (busquedaInicial) setQuery(busquedaInicial)
   }, [])
 
-  const updateMarkers = () => {
-    if (!map.current || !L.current || !markersLayer.current) return
+  const resultados = useMemo(() => {
+    const busqueda = normalizar(query.trim())
 
-    markersLayer.current.clearLayers()
+    return CENTROS.filter((centro) => {
+      const coincideCiudad = ciudad === 'todas' || centro.ciudad === ciudad
+      const coincideSabado = !soloSabado || centro.abreSabado
+      const coincideBusqueda =
+        busqueda.length === 0 ||
+        [
+          centro.nombre,
+          centro.ciudad,
+          centro.distrito,
+          centro.direccion,
+          centro.servicios.join(' '),
+        ].some((valor) => normalizar(valor).includes(busqueda))
 
-    sedesCoords.forEach((coords, index) => {
-      const isActive = index === selectedSede
-
-      if (isActive) {
-        const pinIcon = L.current.divIcon({
-          className: 'custom-pin-marker',
-          html: `<div class="pin-container relative w-[42px] h-[54px]">
-                  <svg width="42" height="54" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0">
-                    <path d="M12 0C7.58 0 4 3.58 4 8C4 13.54 12 22 12 22C12 22 20 13.54 20 8C20 3.58 16.42 0 12 0Z" fill="#158cca"/>
-                    <circle cx="12" cy="8" r="6" fill="white"/>
-                  </svg>
-                  <div class="absolute top-[4px] left-[10px] w-[22px] h-[22px] flex items-center justify-center overflow-hidden rounded-full">
-                    <img src="/PinSLM.webp" class="w-[80%] h-auto object-contain" alt="SLM" width="18" height="18" />
-                  </div>
-                 </div>`,
-          iconSize: [42, 54],
-          iconAnchor: [21, 54]
-        })
-
-        L.current.marker(coords, { icon: pinIcon })
-          .addTo(markersLayer.current)
-          .bindTooltip(sedes[index].name, {
-            permanent: true,
-            direction: 'right',
-            className: 'map-marker-label',
-            offset: [15, -20]
-          })
-      } else {
-        L.current.circleMarker(coords, {
-          radius: 8,
-          fillColor: "#a3c435",
-          color: "#fff",
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 1
-        }).addTo(markersLayer.current).on('click', () => setSelectedSede(index))
-      }
+      return coincideCiudad && coincideSabado && coincideBusqueda
     })
-  }
+  }, [query, ciudad, soloSabado])
 
-  useEffect(() => {
-    if (map.current) {
-      updateMarkers()
-      map.current.flyTo(sedesCoords[selectedSede], 16, {
-        animate: true,
-        duration: 1.5
-      })
-    }
-  }, [selectedSede])
+  const hayFiltros = query.trim().length > 0 || ciudad !== 'todas' || soloSabado
+
+  const limpiarFiltros = () => {
+    setQuery('')
+    setCiudad('todas')
+    setSoloSabado(false)
+  }
 
   return (
     <div className="w-full bg-white font-sans text-slate-900">
       <Navbar active="sedes" />
 
-      {/* Hero Section */}
-      <section className="bg-[#0f172a] py-12 md:py-16 px-4 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
+      <section className="bg-[#0f172a] py-10 md:py-14 px-4 overflow-hidden relative">
+        <div
+          className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2"
+          aria-hidden="true"
+        />
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+            transition={{ duration: 0.35 }}
           >
-            <div className="text-[10px] md:text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] flex items-center gap-2 justify-center">
-              <span className="w-6 md:w-8 h-px bg-[#a3c435]"></span>
-              ENCUÉNTRANOS
-              <span className="w-6 md:w-8 h-px bg-[#a3c435]"></span>
+            <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
+              <span className="w-8 h-px bg-[#a3c435]"></span>
+              SEDES Y POLICLÍNICOS
+              <span className="w-8 h-px bg-[#a3c435]"></span>
             </div>
-            <div className="flex items-center justify-center gap-2 mb-6 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white/40">
-              <Link href="/" className="hover:text-[#a3c435] transition-colors">Inicio</Link>
+            <div className="flex items-center justify-start gap-2 mb-3 text-[10px] font-black uppercase tracking-widest text-white/40">
+              <Link href="/" className="hover:text-[#a3c435] transition-colors">
+                Inicio
+              </Link>
               <ChevronRight size={10} />
               <span className="text-[#a3c435]">Sedes</span>
             </div>
-            <h1 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6 md:mb-8 leading-[1.1] md:leading-none">
-              Examen Médico <br /> <span className="text-[#158cca]">Cerca de Ti</span>
+            <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
+              Encuentra sedes para tu <span className="text-[#158cca]">examen médico</span> de
+              brevete
             </h1>
-            <p className="text-white/60 text-sm md:text-lg max-w-2xl mx-auto font-medium px-4 md:px-0">
-              Contamos con ubicaciones estratégicas equipadas con la mejor tecnología médica para brindarte una atención rápida y de calidad.
+            <p className="text-white/60 text-sm md:text-base max-w-2xl font-medium">
+              Consulta sedes disponibles, precios publicados, horarios, servicios y medios de
+              contacto para realizar tu examen de aptitud psicosomática.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Map & List Section */}
-      <section className="py-12 md:py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="grid lg:grid-cols-3 gap-8 md:gap-12"
-          >
-            {/* Map Column */}
-            <div className="lg:col-span-2 h-[350px] md:h-[500px] lg:h-[600px] bg-slate-50 border border-slate-100 shadow-2xl relative overflow-hidden order-1 lg:order-1">
-              <div ref={mapContainer} className="w-full h-full z-0" />
-              <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10 bg-white/90 backdrop-blur-md p-3 md:p-4 shadow-xl border border-slate-100 max-w-[200px] md:max-w-none">
-                <div className="flex items-center gap-2 md:gap-3">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-[#158cca] flex items-center justify-center text-white shrink-0">
-                    <MapIcon size={16} />
-                  </div>
-                  <div>
-                    <div className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Sede Seleccionada</div>
-                    <div className="text-[11px] md:text-sm font-black text-[#0f172a] uppercase tracking-tighter truncate">{sedes[selectedSede].name}</div>
-                  </div>
-                </div>
+      <section className="border-b border-slate-100 bg-white px-4 py-6">
+        <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-3">
+          {[
+            {
+              icon: <MapPin size={18} aria-hidden="true" />,
+              titulo: 'Sedes con dirección publicada',
+              detalle: 'Ubicaciones y referencias para llegar.',
+            },
+            {
+              icon: <Check size={18} aria-hidden="true" />,
+              titulo: 'Precio del examen visible',
+              detalle: 'Tarifa publicada de S/ 130.00.',
+            },
+            {
+              icon: <Clock size={18} aria-hidden="true" />,
+              titulo: 'Horarios y contacto directo',
+              detalle: 'Teléfono y WhatsApp por sede.',
+            },
+          ].map((item) => (
+            <div key={item.titulo} className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-100 text-[#158cca]">
+                {item.icon}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-[#0f172a]">{item.titulo}</p>
+                <p className="text-xs font-normal text-slate-500">{item.detalle}</p>
               </div>
             </div>
-
-            {/* List Column */}
-            <div className="space-y-4 h-[400px] lg:h-[600px] overflow-y-auto pr-2 custom-scrollbar order-2 lg:order-2">
-              {sedes.map((sede, idx) => (
-                <motion.div
-                  key={idx}
-                  onClick={() => setSelectedSede(idx)}
-                  className={`p-4 md:p-6 cursor-pointer border transition-all duration-500 ${
-                    selectedSede === idx 
-                    ? 'bg-[#0f172a] border-[#0f172a] text-white shadow-2xl lg:translate-x-2' 
-                    : 'bg-white border-slate-100 hover:border-[#158cca]/30 text-slate-900'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className={`text-base md:text-lg font-black uppercase tracking-tighter ${selectedSede === idx ? 'text-[#a3c435]' : 'text-[#0f172a]'}`}>
-                      {sede.name}
-                    </h3>
-                    {selectedSede === idx && <div className="w-2.5 h-2.5 bg-[#a3c435] rounded-full" />}
-                  </div>
-
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-start gap-3 opacity-80">
-                      <MapPin size={16} className="shrink-0 mt-1 text-[#158cca]" />
-                      <span className="text-xs md:text-sm font-bold leading-tight">{sede.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3 opacity-80">
-                      <Phone size={16} className="shrink-0 text-[#158cca]" />
-                      <span className="text-xs md:text-sm font-bold">{sede.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-3 opacity-80">
-                      <Clock size={16} className="shrink-0 text-[#158cca]" />
-                      <span className="text-xs md:text-sm font-bold">{sede.hours}</span>
-                    </div>
-                  </div>
-
-                  {selectedSede === idx && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="space-y-6 pt-4 border-t border-white/10"
-                    >
-                      <div className="grid grid-cols-3 gap-2">
-                        <a 
-                          href={`https://www.google.com/maps/search/?api=1&query=${sedesCoords[idx][0]},${sedesCoords[idx][1]}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="bg-white/10 hover:bg-white/20 h-12 flex items-center justify-center border border-white/10 transition-colors"
-                        >
-                          <SiGooglemaps size={18} />
-                        </a>
-                        <a 
-                          href={`https://waze.com/ul?ll=${sedesCoords[idx][0]},${sedesCoords[idx][1]}&navigate=yes`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="bg-[#33ccff]/20 hover:bg-[#33ccff]/40 h-12 flex items-center justify-center border border-[#33ccff]/30 transition-colors"
-                        >
-                          <SiWaze size={18} />
-                        </a>
-                        <a 
-                          href={`https://wa.me/51${sede.whatsapp.replace(/\s/g, '')}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="bg-[#25D366]/20 hover:bg-[#25D366]/40 h-12 flex items-center justify-center border border-[#25D366]/30 transition-colors"
-                        >
-                          <FaWhatsapp size={18} />
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Services in Sedes */}
-      <section className="py-24 px-4 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+      <section id="resultados" className="scroll-mt-28 px-4 py-10 md:py-14">
+        <div className="mx-auto max-w-7xl">
+          <form
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault()
+              document.getElementById('resultados')?.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="mb-8 flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-2 shadow-sm sm:flex-row"
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black text-[#0f172a] uppercase tracking-tighter mb-4">Servicios Disponibles</h2>
-              <p className="text-slate-600 font-medium">Todas nuestras sedes están autorizadas y cuentan con:</p>
+            <div className="relative flex-1">
+              <label htmlFor="buscar-centro" className="sr-only">
+                Buscar por distrito, ciudad o nombre del policlínico
+              </label>
+              <Search
+                size={18}
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                aria-hidden="true"
+              />
+              <input
+                id="buscar-centro"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Busca por distrito, ciudad o nombre"
+                className="h-12 w-full rounded-md border border-transparent bg-slate-50 pl-11 pr-4 text-sm font-normal text-[#0f172a] placeholder:text-slate-400 focus:border-[#158cca] focus:outline-none focus:ring-2 focus:ring-[#158cca]/40"
+              />
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            {[
-              { title: "Medicina General", icon: <Check className="text-[#a3c435]" /> },
-              { title: "Psicometría", icon: <Check className="text-[#a3c435]" /> },
-              { title: "Oftalmología", icon: <Check className="text-[#a3c435]" /> },
-              { title: "Audiometría", icon: <Check className="text-[#a3c435]" /> }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white p-8 border border-slate-200 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-slate-50 flex items-center justify-center mb-4">
-                  {item.icon}
-                </div>
-                <h4 className="font-black text-slate-800 uppercase tracking-tighter">{item.title}</h4>
+            <button
+              type="submit"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#1176ab] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+            >
+              <Search size={17} aria-hidden="true" />
+              Buscar sedes
+            </button>
+          </form>
+
+          <div className="mb-6 flex flex-col gap-4 border-b border-slate-100 pb-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+                Sedes disponibles
+              </h2>
+              <p className="mt-1 text-sm font-normal text-slate-600" aria-live="polite">
+                {resultados.length} de {CENTROS.length} sedes encontradas
+                {hayFiltros ? ' con los filtros aplicados' : ''}.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div>
+                <label
+                  htmlFor="filtro-ciudad"
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Ciudad
+                </label>
+                <select
+                  id="filtro-ciudad"
+                  value={ciudad}
+                  onChange={(event) => setCiudad(event.target.value)}
+                  className="h-11 w-full rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-[#0f172a] focus:border-[#158cca] focus:outline-none focus:ring-2 focus:ring-[#158cca]/30 sm:w-44"
+                >
+                  <option value="todas">Todas las ciudades</option>
+                  {CIUDADES.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <label className="flex h-11 cursor-pointer items-center gap-2 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-700 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#158cca]/30">
+                <input
+                  type="checkbox"
+                  checked={soloSabado}
+                  onChange={(event) => setSoloSabado(event.target.checked)}
+                  className="h-4 w-4 rounded border-slate-300 accent-[#1176ab] focus:ring-[#158cca]"
+                />
+                Abre los sábados
+              </label>
+
+              {hayFiltros && (
+                <button
+                  type="button"
+                  onClick={limpiarFiltros}
+                  className="inline-flex h-11 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-semibold text-[#0f172a] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+                >
+                  <X size={15} aria-hidden="true" />
+                  Limpiar filtros
+                </button>
+              )}
+            </div>
+          </div>
+
+          {resultados.length > 0 ? (
+            <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
+              {resultados.map((centro) => (
+                <CentroCard key={centro.id} centro={centro} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
+              <Search size={28} className="mx-auto mb-3 text-slate-400" aria-hidden="true" />
+              <h3 className="text-lg font-semibold text-[#0f172a]">
+                No encontramos sedes con esos criterios
+              </h3>
+              <p className="mx-auto mt-2 max-w-md text-sm font-normal text-slate-600">
+                Prueba con otra ciudad o distrito. También puedes limpiar los filtros para ver
+                todas las sedes disponibles.
+              </p>
+              <button
+                type="button"
+                onClick={limpiarFiltros}
+                className="mt-5 inline-flex h-11 items-center justify-center rounded-md bg-[#1176ab] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+              >
+                Limpiar filtros
+              </button>
+            </div>
+          )}
+
+          <div className="mt-8 flex flex-col gap-2 border-t border-slate-100 pt-5 text-xs font-normal text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>Información actualizada en {FECHA_ACTUALIZACION}.</p>
+            <a
+              href="mailto:info@sanluismedic.pe?subject=Reportar%20datos%20del%20directorio"
+              className="inline-flex items-center gap-1.5 font-medium text-[#0f172a] underline-offset-2 hover:text-[#1176ab] hover:underline"
+            >
+              <MessageSquareWarning size={14} aria-hidden="true" />
+              Reportar datos incorrectos
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-100 bg-slate-50 px-4 py-12 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-2xl">
+            <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+              Tarifario de referencia
+            </h2>
+            <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600">
+              El examen médico tiene una tarifa única para nuevos trámites, revalidación, canje
+              extranjero y recategorización de licencias de moto y carro.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {TARIFAS.map((tarifa) => (
+              <div
+                key={tarifa.titulo}
+                className="rounded-xl border border-slate-200 bg-white p-5"
+              >
+                <p className="text-sm font-semibold text-[#0f172a]">{tarifa.titulo}</p>
+                <p className="mt-3 text-2xl font-bold text-[#0f172a]">
+                  S/ {tarifa.precio}.00
+                </p>
+                <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600">
+                  {tarifa.detalle}
+                </p>
               </div>
             ))}
           </div>
-        </motion.div>
+
+          <div className="mt-5 flex items-start gap-2 rounded-lg border border-slate-200 bg-white p-4 text-sm font-normal leading-relaxed text-slate-600">
+            <Info size={18} className="mt-0.5 shrink-0 text-[#158cca]" aria-hidden="true" />
+            <p>
+              Los duplicados solo se emiten para usuarios que aprobaron su examen médico en el
+              centro dentro de los últimos seis meses y cuyo certificado no haya sido utilizado
+              previamente.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-100 px-4 py-12 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-2xl">
+            <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+              Cómo es el examen médico
+            </h2>
+            <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600">
+              El proceso incluye las siguientes etapas. La duración indicada corresponde al tiempo
+              de cada evaluación.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {EVALUACIONES.map((evaluacion, index) => (
+              <div
+                key={evaluacion.titulo}
+                className="rounded-xl border border-slate-200 p-5"
+              >
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-50 text-[#158cca]">
+                    {ICONOS_EVALUACION[index]}
+                  </span>
+                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                    {evaluacion.duracion}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold text-[#0f172a]">
+                  {evaluacion.titulo}
+                </h3>
+                <p className="mt-1.5 text-sm font-normal leading-relaxed text-slate-600">
+                  {evaluacion.detalle}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-100 bg-[#0f172a] px-4 py-12 md:py-14">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <div>
+            <h2 className="text-2xl font-bold text-white md:text-3xl">
+              ¿Necesitas ayuda para elegir una sede?
+            </h2>
+            <p className="mt-2 max-w-xl text-sm font-normal leading-relaxed text-slate-300">
+              Escríbenos y te orientamos sobre disponibilidad, requisitos y horarios de atención.
+            </p>
+          </div>
+          <Link
+            href="/contacto"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-[#1176ab] px-6 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+          >
+            Contactar con un asesor
+          </Link>
         </div>
       </section>
 

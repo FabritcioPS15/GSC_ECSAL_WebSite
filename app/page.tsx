@@ -4,21 +4,24 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Check, ChevronRight, MapPin, Star, Clock, Stethoscope, AlertCircle, ChevronDown } from 'lucide-react'
+import { ArrowRight, Check, ChevronRight, MapPin, Star, Clock, Stethoscope, AlertCircle, ChevronDown, Search } from 'lucide-react'
 import { motion, Variants } from 'framer-motion'
 import Image from 'next/image'
 import { FaWhatsapp, FaFlask, FaBrain, FaEye, FaStethoscope, FaFileMedical } from 'react-icons/fa'
 import dynamic from 'next/dynamic'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { CENTROS } from '@/lib/directorio'
 
 // Lazy load the map section - removes ~200KB of Leaflet from initial bundle
 const MapSection = dynamic(() => import('@/components/map-section'), {
   ssr: false,
   loading: () => (
     <div className="grid lg:grid-cols-3 gap-8">
-      <div className="lg:col-span-2 h-[500px] border border-slate-100 shadow-xl bg-slate-100 animate-pulse flex items-center justify-center">
-        <div className="text-slate-400 text-sm font-medium">Cargando mapa...</div>
+      <div className="lg:col-span-2 flex h-[500px] items-center justify-center border border-slate-100 bg-slate-50 shadow-xl">
+        <div className="loader" role="status" aria-label="Cargando mapa">
+          <span className="sr-only">Cargando mapa...</span>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         {[1, 2, 3].map(i => <div key={i} className="h-24 bg-slate-100 animate-pulse border border-slate-100" />)}
@@ -34,8 +37,6 @@ export default function Home() {
   const [counters, setCounters] = useState({ years: 0, clients: 0, branches: 0 })
   const [countersStarted, setCountersStarted] = useState(false)
   const [isHeroDropdownOpen, setIsHeroDropdownOpen] = useState(false)
-  const [isPricingDropdownOpen, setIsPricingDropdownOpen] = useState(false)
-  const [pricingSede, setPricingSede] = useState(0)
   const [activeSection, setActiveSection] = useState('inicio')
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -117,7 +118,7 @@ export default function Home() {
 
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.3 : 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.15 : 0.3, ease: "easeOut" } }
   }
 
   const staggerContainer: Variants = {
@@ -125,7 +126,7 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: isMobile ? 0.05 : 0.1
+        staggerChildren: isMobile ? 0.02 : 0.05
       }
     }
   }
@@ -143,7 +144,7 @@ export default function Home() {
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: 0.2, duration: 0.3 }}
       >
         <FaWhatsapp size={32} aria-hidden="true" />
       </motion.a>
@@ -151,7 +152,7 @@ export default function Home() {
       <Navbar active={activeSection} home />
 
       {/* Section 1: Hero */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-white">
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-white">
         {/* Blurred Medical Background */}
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <Image
@@ -177,37 +178,37 @@ export default function Home() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-4 w-full relative z-10 pt-12 pb-16">
+        <div className="max-w-7xl mx-auto px-4 w-full relative z-10 pt-8 pb-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
             >
               <p className="text-slate-600 text-sm font-bold tracking-wide italic mb-4">
                 <span className="inline-block w-10 h-0.5 bg-[#a3c435] mr-2" aria-hidden="true"></span>
                 ¡Reserva Ahora tu Cita para el Examen Médico!
               </p>
 
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0f172a] leading-tight mb-6">
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-tight mb-4">
                 Examen Médico <br />
                 <span className="text-[#158cca]">para Brevete - MTC</span>
               </h1>
 
-              <h2 className="text-xl md:text-2xl font-bold text-[#0f172a] mb-6 leading-relaxed">
+              <h2 className="text-lg md:text-xl font-bold text-[#0f172a] mb-4 leading-relaxed">
                 ¿Necesitas sacar tu brevete nuevo o revalidar? <br />
                 <span className="text-[#158cca]">¡Obtén tu Licencia de Conducir en un día!</span>
               </h2>
 
-              <p className="text-slate-600 mb-10 text-base leading-relaxed max-w-2xl font-medium">
+              <p className="text-slate-600 mb-6 text-sm md:text-base leading-relaxed max-w-2xl font-medium">
                 Reserva tu Cita el día y la hora que mejor se adapte para que asistas a nuestro Centro Médico Autorizado. En San Luis Medic contamos con un Staff Médico preparado para agilizar el Examen Médico para Brevete. Además estamos Avalados por el MTC y la Super-Intendencia de Salud para Emitir Certificados Médicos para Brevete Legales.
               </p>
 
-              <h3 className="text-lg font-black text-[#0f172a] uppercase tracking-tighter mb-4">
+              <h3 className="text-base font-black text-[#0f172a] uppercase tracking-tighter mb-3">
                 Examen Médico para Brevete en Lima
               </h3>
-              <ul className="space-y-3 mb-10">
+              <ul className="space-y-2 mb-6">
                 {[
                   "Elige la Fecha y Hora del Examen",
                   "Obtén tu Certificado en tan solo ¡2 horas y media!",
@@ -220,6 +221,37 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+
+              <form
+                action="/sedes"
+                method="get"
+                role="search"
+                className="mb-6 flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-2 shadow-sm sm:flex-row"
+              >
+                <label htmlFor="home-buscar-centro" className="sr-only">
+                  Buscar centro médico por distrito, ciudad o nombre
+                </label>
+                <div className="relative flex-1">
+                  <Search
+                    size={17}
+                    className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                    aria-hidden="true"
+                  />
+                  <input
+                    id="home-buscar-centro"
+                    name="q"
+                    type="search"
+                    placeholder="Busca por distrito, ciudad o nombre del centro"
+                    className="h-11 w-full rounded-md bg-transparent pl-9 pr-3 text-sm font-normal text-[#0f172a] placeholder:text-slate-400 focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-[#1176ab] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+                >
+                  Buscar centros
+                </button>
+              </form>
 
               <div className="flex flex-col sm:flex-row items-center gap-6">
                 <div className="relative">
@@ -281,8 +313,8 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="relative hidden lg:block h-[700px]"
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                className="relative hidden lg:block h-[560px]"
               >
               <div className="relative h-full w-full flex items-end">
                 {/* Decorative Elements */}
@@ -302,7 +334,7 @@ export default function Home() {
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-20 -left-10 bg-white p-5 shadow-2xl border border-slate-50 z-20 hidden xl:block"
+                  className="absolute bottom-12 -left-10 bg-white p-4 shadow-2xl border border-slate-50 z-20 hidden xl:block"
                   aria-live="polite"
                 >
                   <div className="flex items-center gap-4">
@@ -516,8 +548,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 4: Precios */}
-      <section id="precios" className="py-24 px-4 bg-white">
+      {/* Section 4: Sedes */}
+      <section id="sedes" className="py-24 px-4 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -528,55 +560,11 @@ export default function Home() {
           >
             <p className="text-xs text-[#a3c435] font-bold mb-3 uppercase tracking-widest flex items-center gap-2 justify-center">
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-              Tarifario Claro
+              Nuestras Sedes
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h3 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Elige el servicio que necesitas</h3>
-            <p className="text-slate-600 text-lg">Precios transparentes sin costos ocultos. Incluyen todo lo necesario para tu trámite en el MTC.</p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-            className="flex justify-center mb-12"
-          >
-            <div className="relative w-full max-w-md">
-              <button
-                onClick={() => setIsPricingDropdownOpen(!isPricingDropdownOpen)}
-                aria-expanded={isPricingDropdownOpen}
-                aria-haspopup="listbox"
-                className="w-full px-8 py-4 font-bold transition-all duration-300 border-2 bg-white border-slate-100 text-slate-700 hover:border-[#158cca]/30 flex items-center justify-between"
-              >
-                <span>{pricingSede === null ? 'Selecciona tu sede' : sedes[pricingSede].name}</span>
-                <ChevronDown size={20} className={`transition-transform duration-300 ${isPricingDropdownOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
-
-              {isPricingDropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  role="listbox"
-                  className="absolute top-full left-0 mt-2 w-full bg-white border border-slate-100 shadow-2xl z-50"
-                >
-                  {sedes.map((sede, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setPricingSede(idx)
-                        setIsPricingDropdownOpen(false)
-                      }}
-                      role="option"
-                      aria-selected={pricingSede === idx}
-                      className={`w-full px-8 py-4 font-bold transition-all duration-300 text-left hover:bg-slate-50 ${pricingSede === idx ? 'bg-[#158cca]/10 text-[#158cca]' : 'text-slate-700'}`}
-                    >
-                      {sede.name}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </div>
+            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Elige la sede que prefieras</h2>
+            <p className="text-slate-600 text-lg">Cada sede cuenta con su propio tarifario, horarios y canales de atención. Ingresa para ver toda la información.</p>
           </motion.div>
 
           <motion.div
@@ -584,140 +572,105 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-0 border border-slate-100"
+            className="grid md:grid-cols-3 gap-0 border border-slate-100"
           >
-            {[
-              {
-                title: "Nuevo A I",
-                subtitle: "Primera licencia",
-                image: "https://images.unsplash.com/photo-1580281657527-47f249e8f4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
-                features: ["Examen Psicológico", "Examen Visual y Auditivo", "Médico General", "Registro Biométrico"],
-                prices: [
-                  { regular: 180, web: 150 }, // Lima
-                  { regular: 160, web: 130 }, // Andahuaylas
-                  { regular: 170, web: 140 }  // Ayacucho
-                ]
-              },
-              {
-                title: "Revalidación",
-                subtitle: "Renueva tu licencia",
-                image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
-                features: ["Actualización MTC", "Evaluación Visual", "Médica Breve", "Firma Biométrica"],
-                prices: [
-                  { regular: 180, web: 150 }, // Lima
-                  { regular: 160, web: 130 }, // Andahuaylas
-                  { regular: 170, web: 140 }  // Ayacucho
-                ]
-              },
-              {
-                title: "Recategorización",
-                subtitle: "Sube de categoría",
-                image: "https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
-                features: ["Evaluación completa", "Pruebas avanzadas", "Psicotécnico", "Certificación MTC"],
-                prices: [
-                  { regular: 220, web: 180 }, // Lima
-                  { regular: 200, web: 160 }, // Andahuaylas
-                  { regular: 210, web: 170 }  // Ayacucho
-                ]
-              },
-              {
-                title: "Licencia Moto",
-                subtitle: "Categoría B-II",
-                image: "https://images.unsplash.com/photo-1558981403-c5f91cbba527?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60",
-                features: ["Examen Médico Moto", "Evaluación Visual", "Psicológico Básico", "Carga al Sistema"],
-                prices: [
-                  { regular: 150, web: 120 }, // Lima
-                  { regular: 130, web: 100 }, // Andahuaylas
-                  { regular: 140, web: 110 }  // Ayacucho
-                ]
-              }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeIn}
-                onClick={() => setActiveCard(activeCard === idx ? null : idx)}
-                className="relative h-[500px] overflow-hidden group cursor-pointer border-r border-slate-100 last:border-r-0"
-              >
-                {/* Initial View: Title */}
-                <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white z-10 transition-all duration-500 ${activeCard === idx ? 'translate-y-[-100%]' : 'group-hover:translate-y-[-100%]'}`}>
-                  <h3 className="text-2xl font-black text-[#0f172a] uppercase tracking-tighter">{item.title}</h3>
-                  <div className="mt-4 flex flex-col items-center">
-                    <span className="text-xs text-slate-400 line-through">S/ {item.prices[pricingSede].regular}.00</span>
-                    <span className="text-xl font-black text-[#158cca]">S/ {item.prices[pricingSede].web}.00</span>
-                    <span className="text-[10px] font-bold text-[#a3c435] uppercase tracking-wider mt-1">Precio Web</span>
-                  </div>
-                  <div className={`w-12 h-1 bg-[#158cca] mt-6 transition-all duration-500 ${activeCard === idx ? 'w-24' : 'group-hover:w-24'}`}></div>
-                </div>
+            {CENTROS.map((centro, idx) => {
+              const abierto = activeCard === idx
+              const whatsappUrl = `https://wa.me/${centro.whatsapp}?text=${encodeURIComponent(
+                `Hola San Luis Medic, deseo información sobre el examen médico de brevete en la sede ${centro.ciudad}.`
+              )}`
 
-                {/* Hover View: Content & Image */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    loading="lazy"
-                    className={`object-cover transition-transform duration-700 ${activeCard === idx ? 'scale-110' : 'group-hover:scale-110'}`}
-                  />
-                  <div className="absolute inset-0 bg-[#0f172a]/80"></div>
-                </div>
-
-                {/* Content Overlay */}
-                <div className={`absolute inset-0 p-10 flex flex-col justify-between z-20 transition-all duration-500 delay-100 ${activeCard === idx ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 group-hover:opacity-100 group-hover:translate-y-0'}`}>
-                  <div>
-                    <span className="text-[#a3c435] text-xs font-bold uppercase tracking-widest">{item.subtitle}</span>
-                    <h3 className="text-3xl font-black text-white mt-2 uppercase tracking-tighter">{item.title}</h3>
+              return (
+                <motion.div
+                  key={centro.id}
+                  variants={fadeIn}
+                  onClick={() => setActiveCard(abierto ? null : idx)}
+                  className="relative h-[470px] overflow-hidden group cursor-pointer border-b border-slate-100 md:border-b-0 md:border-r last:border-r-0 last:border-b-0"
+                >
+                  {/* Initial View */}
+                  <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white px-8 text-center z-10 transition-all duration-500 ${abierto ? '-translate-y-full' : 'group-hover:-translate-y-full'}`}>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#158cca]">{centro.ciudad}</span>
+                    <h3 className="mt-3 text-3xl font-black uppercase tracking-tighter text-[#0f172a]">{centro.distrito}</h3>
+                    <div className="mt-5 h-px w-12 bg-[#a3c435]" aria-hidden="true"></div>
+                    <p className="mt-5 text-sm font-normal leading-relaxed text-slate-600">{centro.direccion}</p>
+                    <Link
+                      href={`/sedes/${centro.id}`}
+                      className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#1176ab] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+                    >
+                      Ver sede
+                      <ArrowRight size={17} aria-hidden="true" />
+                    </Link>
+                    <p className="mt-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                      Tarifario, horarios y contacto
+                    </p>
                   </div>
 
-                  <div>
-                    <div className="mb-6">
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <span className="text-white/40 text-sm line-through">S/ {item.prices[pricingSede].regular}.00</span>
-                        <span className="text-white/60 text-xs uppercase font-bold tracking-widest">Precio Regular</span>
-                      </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-black text-[#a3c435]">S/ {item.prices[pricingSede].web}<span className="text-lg">.00</span></span>
-                        <span className="text-[#a3c435] text-xs font-bold uppercase tracking-widest bg-[#a3c435]/10 px-2 py-0.5">Especial Web</span>
-                      </div>
+                  {/* Reveal View */}
+                  <div className={`absolute inset-0 flex flex-col justify-between bg-[#0f172a] p-8 z-20 transition-all duration-500 delay-100 ${abierto ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto'}`}>
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[#a3c435]">Sede {centro.ciudad}</span>
+                      <h3 className="mt-2 text-2xl font-black uppercase tracking-tighter text-white">{centro.nombre}</h3>
+                      <p className="mt-4 flex items-start gap-2 text-sm font-normal leading-relaxed text-white/70">
+                        <MapPin size={16} className="mt-0.5 shrink-0 text-[#a3c435]" aria-hidden="true" />
+                        <span>{centro.direccion}</span>
+                      </p>
+                      <p className="mt-3 flex items-start gap-2 text-sm font-normal leading-relaxed text-white/70">
+                        <Clock size={16} className="mt-0.5 shrink-0 text-[#a3c435]" aria-hidden="true" />
+                        <span>{centro.horario}</span>
+                      </p>
                     </div>
 
-                    <ul className="space-y-3 mb-8">
-                      {item.features.map((feature, fIdx) => (
-                        <li key={fIdx} className="flex items-center gap-2 text-white/80 text-sm">
-                          <Check size={14} className="text-[#a3c435]" aria-hidden="true" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-col gap-3">
+                    <div>
+                      <div className="mb-5 flex items-baseline gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">Examen médico</span>
+                        <span className="text-3xl font-black text-[#a3c435]">S/ {centro.precioExamen}<span className="text-base">.00</span></span>
+                      </div>
+                      <ul className="mb-6 flex flex-wrap gap-1.5">
+                        {centro.servicios.slice(0, 3).map((servicio) => (
+                          <li key={servicio} className="rounded-md border border-white/15 px-2 py-1 text-[11px] font-medium text-white/70">
+                            {servicio}
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        href={`/sedes/${centro.id}`}
+                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#1176ab] text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+                      >
+                        Ver página de la sede
+                        <ArrowRight size={17} aria-hidden="true" />
+                      </Link>
                       <a
-                        href={`https://wa.me/51${sedes[pricingSede].whatsapp.replace(/\s/g, '')}?text=Hola%20San%20Luis%20Medic%20sede%20${sedes[pricingSede].name},%20quiero%20información%20sobre%20el%20precio%20web%20de%20${item.title.replace(' ', '%20')}`}
+                        href={whatsappUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-full"
+                        onClick={(event) => event.stopPropagation()}
+                        className="mt-3 inline-flex h-10 w-full items-center justify-center text-[10px] font-bold uppercase tracking-widest text-white/60 transition-colors hover:text-white"
                       >
-                        <Button className="w-full bg-[#158cca] hover:bg-[#1176ab] text-white font-bold h-12 rounded-none uppercase tracking-widest text-xs">
-                          Inscríbete ahora
-                        </Button>
+                        Consultar por WhatsApp
                       </a>
-                      <Link href={`${["/servicios/licencia-particular", "/servicios/revalidacion", "/servicios/recategorizacion", "/servicios/licencia-moto"][idx]}?sede=${pricingSede}`} className="text-center text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors">
-                        Conoce más sobre este trámite →
-                      </Link>
                     </div>
                   </div>
-                </div>
 
-                {/* Decorative Growing Bar */}
-                <div className={`absolute bottom-0 left-0 w-full bg-[#a3c435] transition-all duration-500 opacity-50 ${activeCard === idx ? 'h-2' : 'h-0 group-hover:h-2'}`} aria-hidden="true"></div>
-              </motion.div>
-            ))}
+                  <div className={`absolute bottom-0 left-0 w-full bg-[#a3c435] transition-all duration-500 opacity-50 ${abierto ? 'h-2' : 'h-0 group-hover:h-2'}`} aria-hidden="true"></div>
+                </motion.div>
+              )
+            })}
           </motion.div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/sedes"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-slate-300 px-6 text-sm font-semibold text-[#0f172a] transition-colors hover:border-[#158cca] hover:text-[#158cca] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
+            >
+              <Search size={17} aria-hidden="true" />
+              Ver todas las sedes
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Section 7: Nuestras Sedes */}
-      <section id="sedes" className="py-24 px-4 bg-white border-t border-slate-100">
+      {/* Section 7: Mapa de sedes */}
+      <section id="mapa" className="py-24 px-4 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -731,8 +684,15 @@ export default function Home() {
               UBICACIONES
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Nuestras Sedes</h2>
-            <p className="text-slate-600 text-lg">Atendemos en múltiples ubicaciones estratégicas para tu comodidad</p>
+            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Ubícanos en el mapa</h2>
+            <p className="text-slate-600 text-lg">Explora la ubicación de cada sede y abre la ruta en Google Maps o Waze.</p>
+            <Link
+              href="/sedes"
+              className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#158cca] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a]"
+            >
+              <Search size={17} aria-hidden="true" />
+              Ver todas las sedes
+            </Link>
           </motion.div>
 
           <MapSection />
@@ -762,7 +722,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: isMobile ? 0.3 : 0.6 }}
+              transition={{ duration: isMobile ? 0.15 : 0.3 }}
               whileHover={!isMobile ? { y: -10 } : {}}
               className="relative h-[500px] overflow-hidden group cursor-pointer"
               onClick={() => window.open('https://revisiones-tecnicas.com', '_blank')}
@@ -810,7 +770,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: isMobile ? 0.3 : 0.6, delay: isMobile ? 0 : 0.1 }}
+              transition={{ duration: isMobile ? 0.15 : 0.3, delay: isMobile ? 0 : 0.1 }}
               whileHover={!isMobile ? { y: -10 } : {}}
               className="relative h-[500px] overflow-hidden group cursor-pointer"
               onClick={() => window.open('https://escuela-conductores.com', '_blank')}

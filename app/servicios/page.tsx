@@ -14,29 +14,25 @@ export default function Servicios() {
       title: "Licencia Particular (A1)",
       description: "Examen médico completo para obtener tu primera licencia de conducir particular.",
       icon: <Car className="w-8 h-8" />,
-      link: "/servicios/licencia-particular",
-      price: "S/ 150"
+      link: "/servicios/licencia-particular"
     },
     {
       title: "Revalidación",
       description: "Renueva tu licencia vencida de forma rápida y sin complicaciones.",
       icon: <RefreshCw className="w-8 h-8" />,
-      link: "/servicios/revalidacion",
-      price: "S/ 120"
+      link: "/servicios/revalidacion"
     },
     {
       title: "Recategorización",
       description: "Sube de categoría para conducir vehículos de mayor tonelaje o transporte público.",
       icon: <Truck className="w-8 h-8" />,
-      link: "/servicios/recategorizacion",
-      price: "S/ 180"
+      link: "/servicios/recategorizacion"
     },
     {
       title: "Licencia de Moto (B2C)",
       description: "Evaluación médica especializada para conductores de vehículos menores.",
       icon: <Bike className="w-8 h-8" />,
-      link: "/servicios/licencia-moto",
-      price: "S/ 100"
+      link: "/servicios/licencia-moto"
     }
   ]
 
@@ -45,28 +41,28 @@ export default function Servicios() {
       <Navbar active="servicios" />
 
       {/* Hero Banner Section */}
-      <section className="bg-[#0f172a] py-16 px-4 overflow-hidden relative">
+      <section className="bg-[#0f172a] py-10 md:py-14 px-4 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.35 }}
           >
-            <div className="text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] flex items-center gap-2 justify-center">
+            <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
               LO QUE HACEMOS
               <span className="w-8 h-px bg-[#a3c435]"></span>
             </div>
-            <div className="flex items-center justify-center gap-2 mb-6 text-[10px] font-black uppercase tracking-widest text-white/40">
+            <div className="flex items-center justify-start gap-2 mb-3 text-[10px] font-black uppercase tracking-widest text-white/40">
               <Link href="/" className="hover:text-[#a3c435] transition-colors">Inicio</Link>
               <ChevronRight size={10} />
               <span className="text-[#a3c435]">Servicios</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-8 leading-none">
-              Exámenes Médicos <br /> <span className="text-[#158cca]">para Brevetes</span>
+            <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
+              Exámenes Médicos <span className="text-[#158cca]">para Brevetes</span>
             </h1>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto font-medium">
+            <p className="text-white/60 text-sm md:text-base max-w-2xl font-medium">
               Evaluaciones médicas integrales con certificación inmediata ante el MTC para todo tipo de licencias de conducir.
             </p>
           </motion.div>
@@ -93,8 +89,14 @@ export default function Servicios() {
                   {service.description}
                 </p>
                 <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-200">
-                  <span className="text-[#158cca] font-black text-lg">{service.price}</span>
-                  <Link href={service.link} className="w-10 h-10 bg-[#0f172a] text-white flex items-center justify-center hover:bg-[#158cca] transition-colors">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Tarifario por sede
+                  </span>
+                  <Link
+                    href={service.link}
+                    aria-label={`Ver detalles de ${service.title}`}
+                    className="w-10 h-10 bg-[#0f172a] text-white flex items-center justify-center hover:bg-[#158cca] transition-colors"
+                  >
                     <ArrowRight size={18} />
                   </Link>
                 </div>

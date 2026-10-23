@@ -3,14 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@layer base {
-  :root {
-    --font-exo2: var(--font-exo2-inline);
-    --font-ibm-plex: var(--font-ibm-plex-inline);
-    --font-arimo: var(--font-arimo-inline);
-  }
-}
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -83,8 +75,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-ibm-plex);
-  --font-heading: var(--font-exo2);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-inter);
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -198,4 +190,40 @@
 
 .pin-container:hover {
   transform: scale(1.1) translateY(-2px);
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-color: #158cca #0000;
+  animation: l16 1s infinite linear;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+}
+
+.loader::before {
+  border-color: #a3c435 #0000;
+  animation: inherit;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+
+.loader::after {
+  margin: 8px;
+}
+
+@keyframes l16 {
+  100% {
+    transform: rotate(1turn);
+  }
 }

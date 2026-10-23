@@ -1,31 +1,24 @@
 import type { Metadata } from 'next'
-import { Arimo, Exo_2, IBM_Plex_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const arimo = Arimo({ 
-  subsets: ["latin"],
-  variable: '--font-arimo',
-});
-const exo2 = Exo_2({ 
-  subsets: ["latin"],
-  variable: '--font-exo2',
-});
-const ibmPlex = IBM_Plex_Sans({ 
-  subsets: ["latin"],
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
-  variable: '--font-ibm-plex',
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sanluismedic.pe'),
-  title: 'San Luis Medic | Examen Médico para Brevete en un día - Autorizado MTC',
-  description: 'Saca tu brevete nuevo o revalida tu licencia de conducir A1 en un día. Examen médico rápido para brevetes, certificado MTC inmediato. ¡Atención rápida!',
-  keywords: ['examen medico brevete', 'medico brevetes', 'licencia de conducir', 'sacar brevete nuevo', 'brevetes en un dia', 'licencia de conducir a1', 'brevete carro', 'mtc examen medico'],
+  title: 'San Luis Medic | Sedes y Centros Médicos para Brevete en Perú',
+  description: 'Encuentra y compara centros médicos para el examen de aptitud psicosomática del brevete. Consulta sedes, precios, horarios, servicios y contacto directo.',
+  keywords: ['directorio medico brevete', 'centros medicos brevete', 'examen medico brevete', 'policlinicos brevete', 'licencia de conducir', 'mtc examen medico'],
   authors: [{ name: 'San Luis Medic' }],
   openGraph: {
-    title: 'San Luis Medic | Exámenes Médicos para Licencia de Conducir',
-    description: 'Centro de exámenes médicos autorizado por MTC. Servicio rápido y confiable para tu licencia de conducir en Perú.',
+    title: 'San Luis Medic | Sedes y Centros Médicos para Brevete',
+    description: 'Sedes con precios, horarios, servicios y contacto para tu examen médico de licencia de conducir.',
     url: 'https://sanluismedic.pe',
     siteName: 'San Luis Medic',
     images: [
@@ -41,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'San Luis Medic | Examen Médico para Brevete',
-    description: 'Obtén tu certificado médico para brevete en tiempo récord. Autorizado por MTC.',
+    title: 'San Luis Medic | Sedes y Centros Médicos para Brevete',
+    description: 'Encuentra tu centro médico para el examen de brevete y consulta precios, horarios y contacto.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -68,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${arimo.variable} ${exo2.variable} ${ibmPlex.variable} scroll-smooth`}>
+    <html lang="es" className={`${inter.variable} scroll-smooth`}>
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
       </head>
