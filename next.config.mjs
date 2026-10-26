@@ -32,8 +32,14 @@ const nextConfig = {
   compress: true,
   // Enable React strict mode for better performance debugging
   reactStrictMode: true,
-  // Configure headers for caching
+  // Configure headers for caching.
+  // Only apply in production: dev/Turbopack chunk URLs are reused while their
+  // contents change, so immutable caching makes the browser serve stale modules.
   async headers() {
+    if (process.env.NODE_ENV !== 'production') {
+      return []
+    }
+
     return [
       {
         source: '/:all*(svg|jpg|jpeg|png|webp|avif|ico|gif)',
@@ -45,7 +51,8 @@ const nextConfig = {
         ],
       },
       {
-        source: '/:all*(js|css)',
+        // Only content-hashed build output is safe to cache immutably.
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',

@@ -316,39 +316,39 @@ export default function Home() {
                 transition={{ duration: 0.45, ease: "easeOut" }}
                 className="relative hidden lg:block h-[560px]"
               >
-              <div className="relative h-full w-full flex items-end">
-                {/* Decorative Elements */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#158cca]/5 rounded-full blur-[100px] -z-10" aria-hidden="true" />
-                <div className="absolute top-1/4 right-0 w-32 h-32 bg-[#a3c435]/10 rounded-full blur-[50px] -z-10" aria-hidden="true" />
+                <div className="relative h-full w-full flex items-end">
+                  {/* Decorative Elements */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#158cca]/5 rounded-full blur-[100px] -z-10" aria-hidden="true" />
+                  <div className="absolute top-1/4 right-0 w-32 h-32 bg-[#a3c435]/10 rounded-full blur-[50px] -z-10" aria-hidden="true" />
 
-                <Image
-                  src="/Doctor SLM.webp"
-                  alt="Doctora profesional realizando examen médico"
-                  fill
-                  sizes="(max-width: 1024px) 0px, 50vw"
-                  className="object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
-                  priority
-                />
+                  <Image
+                    src="/Doctor SLM.webp"
+                    alt="Doctora profesional realizando examen médico"
+                    fill
+                    sizes="(max-width: 1024px) 0px, 50vw"
+                    className="object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
+                    priority
+                  />
 
-                {/* Floating Feedback Tag */}
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-12 -left-10 bg-white p-4 shadow-2xl border border-slate-50 z-20 hidden xl:block"
-                  aria-live="polite"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="w-12 h-12 bg-[#a3c435] flex items-center justify-center text-white" aria-hidden="true">
-                      <Clock size={24} />
-                    </span>
-                    <div>
-                      <div className="text-xl font-black text-[#0f172a]">2.5 Horas</div>
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Resultados Garantizados</div>
+                  {/* Floating Feedback Tag */}
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-12 -left-10 bg-white p-4 shadow-2xl border border-slate-50 z-20 hidden xl:block"
+                    aria-live="polite"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="w-12 h-12 bg-[#a3c435] flex items-center justify-center text-white" aria-hidden="true">
+                        <Clock size={24} />
+                      </span>
+                      <div>
+                        <div className="text-xl font-black text-[#0f172a]">2.5 Horas</div>
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Resultados Garantizados</div>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
+                  </motion.div>
+                </div>
+              </motion.div>
             )}
           </div>
         </div>
@@ -725,7 +725,7 @@ export default function Home() {
               transition={{ duration: isMobile ? 0.15 : 0.3 }}
               whileHover={!isMobile ? { y: -10 } : {}}
               className="relative h-[500px] overflow-hidden group cursor-pointer"
-              onClick={() => window.open('https://revisiones-tecnicas.com', '_blank')}
+              onClick={() => window.open('https://rtpsancristobal.pe', '_blank')}
             >
               {/* Background Image */}
               <div className="absolute inset-0">
@@ -817,46 +817,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 9: Testimonios */}
-      <section id="testimonios" className="py-24 px-4 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-            className="text-center max-w-2xl mx-auto mb-20"
-          >
-            <p className="text-xs text-[#a3c435] font-bold mb-3 uppercase tracking-widest flex items-center gap-2 justify-center">
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-              EXPERIENCIAS
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-            </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Opiniones de Conductores</h2>
-            <p className="text-slate-600 text-lg">Cientos de conductores confían en nosotros cada mes</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: "Carlos Rivera", text: "Excelente atención, el proceso fue muy rápido y ordenado. Cumplen con todo lo que prometen.", rating: 5 },
-              { name: "Ana María Soto", text: "Muy profesionales. Me explicaron cada paso del examen y el personal fue muy amable.", rating: 5 },
-              { name: "Jorge Luis Paico", text: "La mejor opción para renovar el brevete. Sin colas innecesarias y todo digital.", rating: 5 }
-            ].map((testimony, idx) => (
-              <article key={idx} className="bg-white p-8 border border-slate-100 shadow-sm relative">
-                <div className="flex gap-1 mb-4" aria-label={`Calificación de ${testimony.rating} de 5 estrellas`}>
-                  {[...Array(testimony.rating)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <blockquote className="text-slate-600 italic mb-6 leading-relaxed">
-                  <p>"{testimony.text}"</p>
-                </blockquote>
-                <p className="font-bold text-[#0f172a] uppercase tracking-wider text-xs">— {testimony.name}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Section 10: FAQ */}
       <section id="faq" className="py-24 px-4 bg-white border-t border-slate-100">
