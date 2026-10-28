@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { formatMiles } from '@/lib/utils'
 
 export default function Nosotros() {
   const [counters, setCounters] = useState({ years: 0, clients: 0, branches: 0 })
@@ -30,7 +31,7 @@ export default function Nosotros() {
 
       if (currentStep >= steps) {
         clearInterval(interval)
-        setCounters({ years: 15, clients: 50, branches: 3 })
+        setCounters({ years: 15, clients: 50000, branches: 3 })
       }
     }, stepDuration)
 
@@ -46,9 +47,9 @@ export default function Nosotros() {
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.12 }}
           >
             <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
@@ -79,7 +80,7 @@ export default function Nosotros() {
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Años de Trayectoria</div>
             </div>
             <div className="p-10 bg-[#158cca] text-white">
-              <div className="text-5xl font-black mb-2">{counters.clients}K+</div>
+              <div className="text-5xl font-black mb-2">+ {formatMiles(counters.clients)}</div>
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Conductores Certificados</div>
             </div>
             <div className="p-10 bg-slate-50 border border-slate-100">
@@ -95,10 +96,10 @@ export default function Nosotros() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -15 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.12 }}
             >
               <h2 className="text-4xl font-black text-[#0f172a] mb-8 uppercase tracking-tighter leading-none">
                 Liderazgo y <br /> <span className="text-[#158cca]">Excelencia Médica</span>
@@ -126,10 +127,10 @@ export default function Nosotros() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 15 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.12 }}
               className="relative"
             >
               <div className="relative h-[500px] w-full bg-slate-100 border-l-8 border-[#158cca] overflow-hidden group">

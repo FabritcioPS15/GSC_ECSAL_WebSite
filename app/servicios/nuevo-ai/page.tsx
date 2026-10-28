@@ -10,7 +10,7 @@ import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 }
 }
 
@@ -19,7 +19,7 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05
+      staggerChildren: 0.01
     }
   }
 }
@@ -36,9 +36,9 @@ function ServiceContent() {
   const sedeParam = searchParams.get('sede');
   
   const sedes = [
-    { name: 'Lima - Izaguirre', whatsapp: '51999888777', phone: '(01) 642-9971', address: 'Av. Carlos Izaguirre 108, Independencia' },
-    { name: 'Andahuaylas', whatsapp: '944777666', phone: '(054) 234-567', address: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas' },
-    { name: 'Ayacucho', whatsapp: '944666555', phone: '(044) 345-678', address: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho' }
+    { name: 'Lima - Izaguirre', whatsapp: '51999888777', address: 'Av. Carlos Izaguirre 108, Independencia' },
+    { name: 'Andahuaylas', whatsapp: '944777666', address: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas' },
+    { name: 'Ayacucho', whatsapp: '944666555', address: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho' }
   ];
 
   const [selectedSede, setSelectedSede] = useState(sedes[0]);
@@ -201,8 +201,9 @@ function ServiceContent() {
 
                   {isDropdownOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.12 }}
                       className="absolute top-full left-0 mt-3 w-72 bg-white border border-slate-100 rounded-2xl shadow-2xl z-[100] p-2 overflow-hidden"
                     >
                       {sedes.map((sede, index) => (
@@ -469,15 +470,6 @@ function ServiceContent() {
                       <div className="font-bold text-slate-900">
                         {selectedSede.address}
                       </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 bg-white shadow-sm border border-slate-100">
-                    <div className="w-12 h-12 bg-[#a3c435]/10 flex items-center justify-center text-[#a3c435]">
-                      <Phone size={24} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-slate-500">Teléfono</div>
-                      <div className="font-bold text-slate-900">{selectedSede.phone}</div>
                     </div>
                   </div>
                 </div>

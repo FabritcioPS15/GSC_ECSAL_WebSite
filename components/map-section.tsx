@@ -16,7 +16,6 @@ const sedesData = [
   {
     name: "Sede Lima (Izaguirre)",
     address: "Av. Carlos Izaguirre 108, Independencia 15311",
-    phone: "(01) 642-9971",
     whatsapp: "999 888 777",
     hours: "Lun-Sáb: 8am - 6pm",
     services: ["Evaluaciones completas", "Certificados MTC", "Atención prioritaria"],
@@ -25,7 +24,6 @@ const sedesData = [
   {
     name: "Sede Andahuaylas",
     address: "Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas",
-    phone: "(054) 234-567",
     whatsapp: "944 777 666",
     hours: "Lun-Sáb: 9am - 6pm",
     services: ["Evaluaciones completas", "Zona sur", "Atención especializada"],
@@ -34,7 +32,6 @@ const sedesData = [
   {
     name: "Sede Ayacucho",
     address: "Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho",
-    phone: "(044) 345-678",
     whatsapp: "944 666 555",
     hours: "Lun-Vie: 8am - 5pm",
     services: ["Evaluaciones básicas", "Zona norte", "Fácil acceso"],
@@ -168,17 +165,14 @@ export default function MapSection() {
 
             {selectedSede === idx ? (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.12 }}
                 className="space-y-3 mt-3"
               >
                 <div className="text-xs opacity-80 flex gap-2">
                   <MapPin size={14} className="shrink-0 mt-0.5" />
                   <span>{sede.address}</span>
-                </div>
-                <div className="text-xs opacity-80 flex gap-2">
-                  <Phone size={14} className="shrink-0 mt-0.5" />
-                  <span>{sede.phone} | {sede.whatsapp}</span>
                 </div>
                 <div className="flex gap-2 pt-2">
                   <a

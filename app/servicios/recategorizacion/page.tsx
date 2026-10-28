@@ -14,7 +14,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 }
 }
 
@@ -23,7 +23,7 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05
+      staggerChildren: 0.01
     }
   }
 }
@@ -39,9 +39,9 @@ function ServiceContent() {
   const sedeParam = searchParams.get('sede');
 
   const sedes = [
-    { name: 'Sede Lima (Izaguirre)', whatsapp: '999888777', phone: '(01) 642-9971', address: 'Av. Carlos Izaguirre 108, Independencia' },
-    { name: 'Sede Andahuaylas', whatsapp: '944777666', phone: '(054) 234-567', address: 'Jr. Alfonso Ugarte N.º. 354' },
-    { name: 'Sede Ayacucho', whatsapp: '944666555', phone: '(044) 345-678', address: 'Jr. José Santos Chocano N°410' }
+    { name: 'Sede Lima (Izaguirre)', whatsapp: '999888777', address: 'Av. Carlos Izaguirre 108, Independencia' },
+    { name: 'Sede Andahuaylas', whatsapp: '944777666', address: 'Jr. Alfonso Ugarte N.º. 354' },
+    { name: 'Sede Ayacucho', whatsapp: '944666555', address: 'Jr. José Santos Chocano N°410' }
   ];
 
   const [selectedSede, setSelectedSede] = useState(sedes[0]);
@@ -157,9 +157,9 @@ function ServiceContent() {
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.12 }}
           >
             <div className="hidden md:flex text-xs text-[#a3c435] font-bold mb-4 uppercase tracking-[0.3em] items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>

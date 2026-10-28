@@ -63,12 +63,6 @@ export function Footer() {
                 <span className="mt-2 leading-relaxed">Av. Carlos Izaguirre 108, Independencia, Lima</span>
               </li>
               <li className="flex items-center gap-4 group">
-                <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#158cca]/10 transition-colors">
-                  <Phone size={18} className="text-[#158cca]" />
-                </div>
-                <span>(01) 642-9971</span>
-              </li>
-              <li className="flex items-center gap-4 group">
                 <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#a3c435]/10 transition-colors">
                   <Mail size={18} className="text-[#a3c435]" />
                 </div>

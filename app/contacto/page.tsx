@@ -22,7 +22,6 @@ export default function Contacto() {
     {
       name: 'Sede Lima (Izaguirre)',
       whatsapp: '51999888777',
-      phone: '(01) 642-9971',
       mobile: '+51 999 888 777',
       email: 'info@sanluismedic.pe',
       altEmail: 'atencion@corporacionsanluismedic.pe',
@@ -32,7 +31,6 @@ export default function Contacto() {
     {
       name: 'Sede Andahuaylas',
       whatsapp: '51944777666',
-      phone: '(083) 421-543',
       mobile: '+51 944 777 666',
       email: 'andahuaylas@sanluismedic.pe',
       altEmail: 'consultas@sanluismedic.pe',
@@ -42,7 +40,6 @@ export default function Contacto() {
     {
       name: 'Sede Ayacucho',
       whatsapp: '51944666555',
-      phone: '(066) 312-987',
       mobile: '+51 944 666 555',
       email: 'ayacucho@sanluismedic.pe',
       altEmail: 'recepcion@sanluismedic.pe',
@@ -99,9 +96,9 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.12 }}
           >
             <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
@@ -145,7 +142,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
 
                 <motion.div
                   animate={{ height: isSedeSelectorExpanded ? 'auto' : 0, opacity: isSedeSelectorExpanded ? 1 : 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  transition={{ duration: 0.12, ease: "easeInOut" }}
                   className={!isSedeSelectorExpanded ? 'pointer-events-none' : ''}
                 >
                   <div className="flex flex-wrap gap-3 pb-2">
@@ -164,9 +161,10 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                 </motion.div>
 
                 {selectedSede !== null && !isSedeSelectorExpanded && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    transition={{ duration: 0.12 }}
                     className="flex items-center gap-3 text-slate-800 font-bold uppercase tracking-wider text-[11px]"
                   >
                     <div className="w-2 h-2 bg-[#a3c435] rounded-full" />
@@ -177,9 +175,9 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
 
               {selectedSede !== null && currentSede ? (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.12 }}
                   className="space-y-12"
                 >
                   <div>
@@ -195,7 +193,6 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                         <div>
                           <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Llámanos</div>
                           <div className="text-xl font-bold text-slate-900">{currentSede.mobile}</div>
-                          <div className="text-sm text-slate-500 font-medium">{currentSede.phone}</div>
                         </div>
                       </div>
                       <div className="flex gap-6 group">
@@ -222,9 +219,9 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                   </div>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
+                    transition={{ duration: 0.12, delay: 0.06 }}
                     className="p-8 bg-[#158cca] text-white relative overflow-hidden group"
                   >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 -rotate-45 translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-colors" />
@@ -334,9 +331,10 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
 
               {selectedSede === null && (
                 <div className="absolute inset-0 z-20 flex items-center justify-center p-6 text-center">
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.12 }}
                     className="bg-white/90 backdrop-blur-sm p-8 border border-[#158cca]/20 shadow-2xl"
                   >
                     <div className="w-12 h-12 bg-[#158cca]/10 flex items-center justify-center mx-auto mb-4 text-[#158cca]">

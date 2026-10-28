@@ -45,9 +45,9 @@ export default function Servicios() {
         <div className="absolute top-0 right-0 w-1/4 h-full bg-[#158cca]/10 -skew-x-12 translate-x-1/2" />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.12 }}
           >
             <div className="text-xs text-[#a3c435] font-bold mb-2 uppercase tracking-[0.3em] flex items-center gap-2 justify-start">
               <span className="w-8 h-px bg-[#a3c435]"></span>
@@ -76,7 +76,7 @@ export default function Servicios() {
             {services.map((service, idx) => (
               <motion.div
                 key={idx}
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -5 }}
                 className="bg-slate-50 border border-slate-100 p-8 flex flex-col h-full group"
               >
                 <div className="w-16 h-16 bg-[#158cca] text-white flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110">

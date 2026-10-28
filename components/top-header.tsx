@@ -10,9 +10,6 @@ export function TopHeader() {
     <div className="bg-white border-b border-slate-100 text-slate-600 text-[11px] py-1.5 px-4 hidden md:block">
       <div className="max-w-7xl mx-auto grid grid-cols-3 items-center">
         <div className="flex items-center gap-6 font-bold">
-          <a href="tel:016429971" className="flex items-center gap-2 hover:text-[#158cca] transition-colors">
-            <Phone size={14} className="text-[#158cca]" /> (01) 642-9971
-          </a>
           <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-[#158cca] transition-colors">
             <FaWhatsapp size={14} className="text-[#158cca]" /> +51 999 888 777
           </a>
@@ -25,12 +22,12 @@ export function TopHeader() {
           <Image
             src="/Banner horizonal MTC.webp"
             alt="MTC Banner"
-            width={400}
-            height={30}
-            sizes="400px"
+            width={300}
+            height={20}
+            sizes="300px"
             loading="lazy"
             decoding="async"
-            className="h-8 w-auto object-contain"
+            className="h-6 w-auto object-contain"
           />
         </div>
 

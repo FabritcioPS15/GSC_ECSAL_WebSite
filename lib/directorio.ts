@@ -4,7 +4,6 @@ export type Centro = {
   ciudad: string
   distrito: string
   direccion: string
-  telefono: string
   telefonoHref: string
   whatsapp: string
   horario: string
@@ -84,7 +83,6 @@ export const CENTROS: Centro[] = [
     ciudad: 'Lima',
     distrito: 'Independencia',
     direccion: 'Av. Carlos Izaguirre 108, Independencia 15311',
-    telefono: '(01) 642-9971',
     telefonoHref: 'tel:+5116429971',
     whatsapp: '51999888777',
     horario: 'Lunes a sábado, 8:00 a 18:00',
@@ -101,7 +99,6 @@ export const CENTROS: Centro[] = [
     ciudad: 'Andahuaylas',
     distrito: 'Andahuaylas',
     direccion: 'Jr. Alfonso Ugarte N.º 354, frente a la ex UGEL Andahuaylas',
-    telefono: '(054) 234-567',
     telefonoHref: 'tel:+5154234567',
     whatsapp: '51944777666',
     horario: 'Lunes a sábado, 9:00 a 18:00',
@@ -118,7 +115,6 @@ export const CENTROS: Centro[] = [
     ciudad: 'Ayacucho',
     distrito: 'Jesús Nazareno',
     direccion: 'Jr. José Santos Chocano N.º 410, Jesús Nazareno, Huamanga',
-    telefono: '(044) 345-678',
     telefonoHref: 'tel:+5144345678',
     whatsapp: '51944666555',
     horario: 'Lunes a viernes, 8:00 a 17:00',

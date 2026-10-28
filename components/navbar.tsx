@@ -39,9 +39,6 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
         <div className="bg-[#0f172a] text-white text-[11px] py-2.5 px-4 hidden md:block">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center gap-6 font-medium">
-              <a href="tel:016429971" className="flex items-center gap-2 hover:text-[#a3c435] transition-colors">
-                <Phone size={14} className="text-[#a3c435]" /> (01) 642-9971
-              </a>
               <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-[#a3c435] transition-colors">
                 <FaWhatsapp size={14} className="text-[#a3c435]" /> +51 999 888 777
               </a>
@@ -62,15 +59,15 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
 
       {/* Navigation Header */}
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -20 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
+        transition={{ duration: 0.12, ease: "easeOut" }}
         className="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm"
       >
-        <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
-              <Image src="/Slmlogo.webp" alt="San Luis Medic Logo" width={220} height={70} className="h-12 w-auto" sizes="220px" priority />
+              <Image src="/sanluismedichorizontal.png" alt="San Luis Medic Logo" width={240} height={100} className="h-14 w-auto" sizes="240px" priority />
             </Link>
           </div>
 
@@ -88,7 +85,7 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
                         layoutId="activeNav"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#158cca]"
                         initial={false}
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{ duration: 0.15 }}
                       />
                     )}
                   </Link>
@@ -133,7 +130,7 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.12 }}
           className="fixed inset-0 z-50 bg-[#0f172a] md:hidden"
         >
           <div className="relative w-full h-full flex flex-col">
@@ -158,9 +155,9 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.04 }}
+                  transition={{ duration: 0.12, delay: index * 0.02 }}
                 >
                   <Link
                     href={item.href}
@@ -173,9 +170,9 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
               ))}
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
+                transition={{ duration: 0.12, delay: 0.08 }}
                 className="pt-4"
               >
                 <Link href="/contacto" onClick={() => setIsMobileMenuOpen(false)}>
@@ -192,10 +189,6 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
                 <div className="flex items-center gap-2">
                   <MapPin size={16} />
                   <span>Av. Carlos Izaguirre 108, Independencia</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone size={16} />
-                  <span>(01) 642-9971</span>
                 </div>
                 <div className="flex items-center gap-3 pt-2">
                   <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="text-white hover:text-[#25D366] transition-colors">
