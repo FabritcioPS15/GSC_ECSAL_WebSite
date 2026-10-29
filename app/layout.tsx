@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { AnalyticsConsent } from '@/components/analytics-consent'
+import { CookieConsent } from '@/components/cookie-consent'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -67,7 +68,8 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && <AnalyticsConsent />}
+        <CookieConsent />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

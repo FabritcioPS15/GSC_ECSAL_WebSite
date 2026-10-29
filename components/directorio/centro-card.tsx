@@ -61,22 +61,7 @@ export function CentroCard({ centro }: CentroCardProps) {
         </span>
       </div>
 
-      <div className="mb-4">
-        <p className="mb-2 text-xs font-medium text-slate-500">Servicios disponibles</p>
-        <ul className="flex flex-wrap gap-1.5">
-          {centro.servicios.slice(0, 3).map((servicio) => (
-            <li
-              key={servicio}
-              className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600"
-            >
-              {servicio}
-            </li>
-          ))}
-          <li className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600">
-            +{centro.servicios.length - 3} más
-          </li>
-        </ul>
-      </div>
+    
 
       <p className="mb-5 flex items-start gap-2 text-sm font-normal leading-relaxed text-slate-600">
         <Clock size={16} className="mt-0.5 shrink-0 text-[#158cca]" aria-hidden="true" />
@@ -91,23 +76,7 @@ export function CentroCard({ centro }: CentroCardProps) {
           Ver página de la sede
           <ArrowRight size={16} aria-hidden="true" />
         </Link>
-
-        <button
-          type="button"
-          onClick={() => setAbierto((valor) => !valor)}
-          aria-expanded={abierto}
-          aria-controls={detalleId}
-          className="inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-md text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-[#158cca] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
-        >
-          {abierto ? 'Ocultar detalles' : 'Ver detalles de contacto'}
-          <ChevronDown
-            size={15}
-            className={`transition-transform duration-200 ${abierto ? 'rotate-180' : ''}`}
-            aria-hidden="true"
-          />
-        </button>
-
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <a
             href={mapaUrl}
             target="_blank"
@@ -116,13 +85,6 @@ export function CentroCard({ centro }: CentroCardProps) {
           >
             <Navigation size={16} aria-hidden="true" />
             Cómo llegar
-          </a>
-          <a
-            href={centro.telefonoHref}
-            className="inline-flex h-11 items-center justify-center gap-1.5 rounded-md border border-slate-200 text-xs font-semibold text-[#0f172a] transition-colors hover:border-[#158cca] hover:text-[#158cca] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
-          >
-            <Phone size={16} aria-hidden="true" />
-            Llamar
           </a>
           <a
             href={whatsappUrl}
@@ -139,15 +101,6 @@ export function CentroCard({ centro }: CentroCardProps) {
 
       {abierto && (
         <div id={detalleId} className="mt-4 space-y-3 border-t border-slate-100 pt-4">
-          <div>
-            <p className="text-xs font-medium text-slate-500">Teléfono</p>
-            <a
-              href={centro.telefonoHref}
-              className="text-sm font-semibold text-[#0f172a] underline-offset-2 hover:underline"
-            >
-              {centro.telefono}
-            </a>
-          </div>
           <div>
             <p className="mb-1 text-xs font-medium text-slate-500">Servicios disponibles</p>
             <ul className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">

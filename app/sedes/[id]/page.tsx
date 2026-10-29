@@ -136,13 +136,6 @@ export default async function SedePage({
                 Consultar por WhatsApp
               </a>
               <a
-                href={centro.telefonoHref}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/25 px-6 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
-              >
-                <Phone size={17} aria-hidden="true" />
-                {centro.telefono}
-              </a>
-              <a
                 href={mapaUrl}
                 target="_blank"
                 rel="noreferrer"
@@ -157,7 +150,7 @@ export default async function SedePage({
       </section>
 
       <section className="border-b border-slate-100 px-4 py-8">
-        <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[
             {
               icon: <MapPin size={18} aria-hidden="true" />,
@@ -168,11 +161,6 @@ export default async function SedePage({
               icon: <Clock size={18} aria-hidden="true" />,
               titulo: 'Horario de atención',
               detalle: centro.horario,
-            },
-            {
-              icon: <Phone size={18} aria-hidden="true" />,
-              titulo: 'Teléfono',
-              detalle: centro.telefono,
             },
             {
               icon: <Banknote size={18} aria-hidden="true" />,
@@ -296,12 +284,6 @@ export default async function SedePage({
                 <Clock size={18} className="mt-0.5 shrink-0 text-[#158cca]" aria-hidden="true" />
                 <span>{centro.horario}</span>
               </p>
-              <p className="mt-3 flex items-start gap-2 text-sm font-normal leading-relaxed text-slate-700">
-                <Phone size={18} className="mt-0.5 shrink-0 text-[#158cca]" aria-hidden="true" />
-                <a href={centro.telefonoHref} className="underline-offset-2 hover:underline">
-                  {centro.telefono}
-                </a>
-              </p>
 
               <div className="mt-5 grid gap-2 sm:grid-cols-2">
                 <a
@@ -351,19 +333,11 @@ export default async function SedePage({
                 ))}
               </div>
             </div>
-
-            <Link
-              href="/sedes"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0f172a] underline-offset-2 hover:text-[#158cca] hover:underline"
-            >
-              <ArrowLeft size={16} aria-hidden="true" />
-              Ver todas las sedes
-            </Link>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#0f172a] px-4 py-12 md:py-14">
+      <section className="bg-[#1176ab] px-4 py-12 md:py-14">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div>
             <h2 className="text-2xl font-bold text-white md:text-3xl">
@@ -377,7 +351,7 @@ export default async function SedePage({
             href={whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#1176ab] px-6 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#0f172a] px-6 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0f172a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
           >
             <FaWhatsapp size={18} aria-hidden="true" />
             Agendar por WhatsApp

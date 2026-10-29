@@ -33,6 +33,14 @@ const MapSection = dynamic(() => import('@/components/map-section'), {
 
 
 
+// Hero slideshow images
+const HERO_SLIDES = [
+  { src: '/servicios/moto.webp', alt: 'Examen médico para moto' },
+  { src: '/servicios/revalidacion.webp', alt: 'Revalidación de brevete' },
+  { src: '/servicios/recategorizacion.webp', alt: 'Recategorización de licencia' },
+  { src: '/servicios/nuevo-ai.webp', alt: 'Licencia nueva con IA' },
+]
+
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [counters, setCounters] = useState({ years: 0, clients: 0, branches: 0 })
@@ -41,6 +49,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('inicio')
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0)
   const heroDropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown on click outside
@@ -80,6 +89,14 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoaded(true)
+  }, [])
+
+  // Hero slideshow auto-rotation every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroSlideIndex(prev => (prev + 1) % HERO_SLIDES.length)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [])
 
   // Counter animation effect - simplified for mobile
@@ -169,105 +186,94 @@ export default function Home() {
       <Navbar active={activeSection} home />
 
       {/* Section 1: Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/25 to-slate-50 border-b border-slate-100">
-        {/* Subtle grid pattern background */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#158cca 1px, transparent 1px)`,
-            backgroundSize: '24px 24px',
-          }}
-          aria-hidden="true"
-        />
+      <section className="relative min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] xl:min-h-[75vh] flex items-center overflow-hidden bg-[#0a1525]">
+        {/* === BACKGROUND SLIDESHOW === */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          {HERO_SLIDES.map((slide, idx) => (
+            <motion.div
+              key={slide.src}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: heroSlideIndex === idx ? 1 : 0 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+                priority={idx === 0}
+              />
+            </motion.div>
+          ))}
 
-        {/* Ambient background glows */}
-        <div className="absolute top-8 left-1/4 -translate-x-1/2 w-[520px] h-[360px] bg-[#158cca]/10 rounded-full blur-[130px] pointer-events-none -z-0" aria-hidden="true" />
-        <div className="absolute top-1/3 right-10 w-[420px] h-[360px] bg-[#a3c435]/10 rounded-full blur-[140px] pointer-events-none -z-0" aria-hidden="true" />
+          {/* Dark base overlay for readability */}
+          <div className="absolute inset-0 bg-[#0a1525]/55" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20">
+          {/* Gradient fade: from left (opaque) → center (semi) → right (transparent) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to right, #0a1525 0%, #0a1525 35%, rgba(10,21,37,0.80) 50%, rgba(10,21,37,0.35) 65%, transparent 85%)'
+            }}
+          />
+
+          {/* Bottom fade so hero melts into next section */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, transparent, rgba(10,21,37,0.5) 70%, #f8fafc 100%)' }}
+          />
+        </div>
+
+        {/* Slide indicator dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20" aria-label="Slides del fondo">
+          {HERO_SLIDES.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setHeroSlideIndex(idx)}
+              aria-label={`Diapositiva ${idx + 1}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                heroSlideIndex === idx
+                  ? 'bg-white w-6'
+                  : 'bg-white/40 hover:bg-white/70'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* === CONTENT === */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-16 sm:pb-20 md:pb-24">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            
+
             {/* Left Content Column */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
               className="w-full lg:col-span-7 flex flex-col items-start"
             >
-              {/* Official Accreditation Eyebrow Badge */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-[#0f172a] text-xs font-semibold mb-5 shadow-xs">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22c55e] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#22c55e]"></span>
-                </span>
-                <span className="text-[#1176ab] font-bold">MTC &amp; SUSALUD</span>
-                <span className="h-3 w-px bg-slate-300" aria-hidden="true"></span>
-                <span className="text-slate-700 font-medium">Centro Médico Autorizado a Nivel Nacional</span>
-              </div>
 
               {/* Main Heading */}
-              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#0f172a] leading-[1.12] tracking-tight mb-4 text-balance">
-                Examen Médico para <br />
-                <span className="text-[#158cca]">Brevete y Licencia</span> de Conducir
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-extrabold text-white leading-[1.08] tracking-tight mb-5 text-balance drop-shadow-sm">
+                Examen Médico<br />
+                <span className="text-[#5ec4f0]">para Brevete</span> y<br className="hidden sm:block" />
+                {' '}Licencia de Conducir
               </h1>
 
-              {/* Subheading / Value Proposition */}
-              <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl font-normal mb-6">
-                Obtén tu certificado psicosomático oficial para <strong>brevete nuevo (A1, Motos), revalidación o recategorización</strong> en tan solo <span className="text-[#0f172a] font-semibold underline decoration-[#a3c435] decoration-2 underline-offset-4">2 horas y media</span>. Registro directo e inmediato en el Sistema Nacional de Conductores del MTC.
+              {/* Value prop */}
+              <p className="text-white/75 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl font-normal mb-7">
+                Obtén tu certificado psicosomático oficial para <strong className="text-white/95">brevete nuevo (A1, Motos), revalidación o recategorización</strong> en tan solo{' '}
+                <span className="text-[#a3c435] font-semibold">2 horas y media</span>. Registro directo en el Sistema Nacional del MTC.
               </p>
-
-              {/* 4 Trust Feature Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 w-full mb-7">
-                <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:border-[#158cca]/40 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#158cca] flex items-center justify-center shrink-0">
-                    <Clock size={16} className="stroke-[2.5]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-[#0f172a] leading-tight">2.5 Horas</div>
-                    <div className="text-[10px] text-slate-500 font-medium truncate">Entrega rápida</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:border-[#158cca]/40 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                    <ShieldCheck size={16} className="stroke-[2.5]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-[#0f172a] leading-tight">100% Oficial</div>
-                    <div className="text-[10px] text-slate-500 font-medium truncate">Sistema MTC</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:border-[#158cca]/40 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                    <MapPin size={16} className="stroke-[2.5]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-[#0f172a] leading-tight">3 Sedes</div>
-                    <div className="text-[10px] text-slate-500 font-medium truncate">Lima y Provincias</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:border-[#158cca]/40 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-                    <CreditCard size={16} className="stroke-[2.5]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-[#0f172a] leading-tight">Todos los pagos</div>
-                    <div className="text-[10px] text-slate-500 font-medium truncate">Tarjetas y Yape</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTAs & Sede selector */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full mb-6">
-                {/* Booking Dropdown */}
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full mb-7">
                 <div ref={heroDropdownRef} className="relative w-full sm:w-auto">
                   <Button
                     onClick={() => setIsHeroDropdownOpen(!isHeroDropdownOpen)}
                     aria-expanded={isHeroDropdownOpen}
                     aria-haspopup="true"
-                    className="bg-[#158cca] hover:bg-[#1176ab] text-white font-bold px-6 sm:px-8 h-12 sm:h-13 rounded-xl text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2.5 w-full sm:w-auto"
+                    className="bg-[#158cca] hover:bg-[#1176ab] text-white font-bold px-6 sm:px-8 h-12 sm:h-14 rounded-xl text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2.5 w-full sm:w-auto"
                   >
                     <FaWhatsapp size={18} className="text-[#25D366] shrink-0" />
                     <span>Reservar Cita Ahora</span>
@@ -280,7 +286,7 @@ export default function Home() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ duration: 0.15 }}
                       role="menu"
-                      className="absolute top-full left-0 mt-2.5 w-full sm:w-80 bg-white border border-slate-200/90 rounded-2xl shadow-2xl z-[100] p-2 overflow-hidden backdrop-blur-xl"
+                      className="absolute top-full left-0 mt-2.5 w-full sm:w-80 bg-white border border-slate-200/90 rounded-2xl shadow-2xl z-[100] p-2 overflow-hidden"
                     >
                       <div className="px-3 py-2 border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                         Selecciona tu sede más cercana:
@@ -308,62 +314,28 @@ export default function Home() {
                   )}
                 </div>
 
-                {/* Secondary Button to Sedes */}
                 <Link
                   href="/sedes"
-                  className="inline-flex h-12 sm:h-13 items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-5 sm:px-6 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#0f172a] shadow-xs transition-colors gap-2"
+                  className="inline-flex h-12 sm:h-14 items-center justify-center rounded-xl border border-white/25 bg-white/10 backdrop-blur-md hover:bg-white/20 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white transition-colors gap-2"
                 >
-                  <MapPin size={15} className="text-[#158cca]" />
+                  <MapPin size={15} className="text-[#5ec4f0]" />
                   <span>Ver Sedes y Tarifas</span>
                 </Link>
               </div>
-
-              {/* Search Bar for Centers */}
-              <form
-                action="/sedes"
-                method="get"
-                role="search"
-                className="w-full max-w-xl flex flex-col sm:flex-row gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm focus-within:border-[#158cca]/60 focus-within:ring-2 focus-within:ring-[#158cca]/20 transition-all"
-              >
-                <label htmlFor="home-buscar-centro" className="sr-only">
-                  Buscar centro médico por distrito, ciudad o nombre
-                </label>
-                <div className="relative flex-1 flex items-center">
-                  <Search
-                    size={16}
-                    className="pointer-events-none absolute left-3.5 text-slate-400"
-                    aria-hidden="true"
-                  />
-                  <input
-                    id="home-buscar-centro"
-                    name="q"
-                    type="search"
-                    placeholder="Busca por distrito o ciudad (Lima, Andahuaylas, Ayacucho)"
-                    className="h-10 sm:h-11 w-full rounded-xl bg-transparent pl-10 pr-3 text-xs sm:text-sm font-normal text-[#0f172a] placeholder:text-slate-400 focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="inline-flex h-10 sm:h-11 items-center justify-center rounded-xl bg-[#0f172a] hover:bg-[#158cca] px-4 sm:px-5 text-xs sm:text-sm font-semibold text-white transition-colors"
-                >
-                  Buscar
-                </button>
-              </form>
-
-              {/* Trust endorsement footer */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-5 pt-4 border-t border-slate-200/60 w-full max-w-xl text-xs text-slate-500">
+              {/* Social proof */}
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-5 pt-4 border-t border-white/15 w-full max-w-xl text-xs text-white/60">
                 <div className="flex items-center gap-1.5">
-                  <div className="flex text-amber-400">
+                  <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <span className="font-bold text-slate-800">4.9 / 5</span>
+                  <span className="font-bold text-white/90">4.9 / 5</span>
                 </div>
-                <span className="w-1 h-1 rounded-full bg-slate-300" aria-hidden="true" />
+                <span className="w-1 h-1 rounded-full bg-white/30" aria-hidden="true" />
                 <span>+50,000 certificados emitidos</span>
-                <span className="w-1 h-1 rounded-full bg-slate-300" aria-hidden="true" />
-                <div className="relative w-24 h-6 opacity-85 hover:opacity-100 transition-opacity">
+                <span className="w-1 h-1 rounded-full bg-white/30" aria-hidden="true" />
+                <div className="relative w-24 h-6 brightness-[3] opacity-70 hover:opacity-100 transition-opacity">
                   <Image
                     src="/MTC.webp"
                     alt="MTC Autorizado"
@@ -375,63 +347,55 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right Visual Column */}
+            {/* Right: floating doctor photo - desktop only */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full lg:col-span-5 relative flex items-center justify-center mt-4 lg:mt-0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+              className="hidden lg:flex lg:col-span-5 items-end justify-center"
             >
-              <div className="relative w-full max-w-[420px] lg:max-w-none h-[420px] sm:h-[480px] lg:h-[540px] flex items-end justify-center">
-                
-                {/* Backdrop decorative rounded frame & gradient */}
-                <div className="absolute inset-x-2 sm:inset-x-4 bottom-0 top-10 rounded-3xl bg-gradient-to-t from-blue-100/60 via-slate-50/60 to-white/40 border border-blue-100/80 -z-10 shadow-xl overflow-hidden">
-                  <div className="absolute -top-14 -right-14 w-44 h-44 rounded-full bg-[#a3c435]/15 blur-2xl" />
-                  <div className="absolute -bottom-10 -left-10 w-44 h-44 rounded-full bg-[#158cca]/15 blur-2xl" />
-                </div>
+              <div className="relative w-full h-[560px] xl:h-[620px]">
+                {/* Glow ring */}
+                <div className="absolute inset-x-6 bottom-0 top-16 rounded-3xl bg-gradient-to-t from-[#158cca]/25 via-white/5 to-transparent border border-white/10 -z-10" />
 
-                {/* Doctor Photo */}
-                <div className="relative w-full h-full flex items-end justify-center">
-                  <Image
-                    src="/Doctor SLM.webp"
-                    alt="Doctora especialista en evaluación médica para brevete - San Luis Medic"
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                    className="object-contain object-bottom drop-shadow-[0_20px_35px_rgba(15,23,42,0.18)]"
-                    priority
-                  />
-                </div>
+                <Image
+                  src="/Doctor SLM.webp"
+                  alt="Doctora especialista en evaluación médica para brevete - San Luis Medic"
+                  fill
+                  sizes="40vw"
+                  className="object-contain object-bottom drop-shadow-[0_24px_40px_rgba(0,0,0,0.5)]"
+                  priority
+                />
 
-                {/* Floating Badge 1: 2.5 Horas */}
+                {/* Floating badge: 2.5 Horas */}
                 <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-5 -left-2 sm:-left-6 bg-white/95 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 flex items-center gap-3 z-20"
+                  animate={{ y: [0, -7, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute bottom-10 -left-8 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-3 z-20"
                 >
-                  <span className="w-10 h-10 rounded-xl bg-[#a3c435] flex items-center justify-center text-white shrink-0 shadow-sm" aria-hidden="true">
-                    <Clock size={20} className="stroke-[2.5]" />
+                  <span className="w-11 h-11 rounded-xl bg-[#a3c435] flex items-center justify-center text-white shrink-0" aria-hidden="true">
+                    <Clock size={22} />
                   </span>
                   <div>
-                    <div className="text-sm sm:text-base font-extrabold text-[#0f172a] leading-none">2.5 Horas</div>
-                    <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Certificado Rápido</div>
+                    <div className="text-base font-extrabold text-[#0f172a] leading-none">2.5 Horas</div>
+                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Certificado Rápido</div>
                   </div>
                 </motion.div>
 
-                {/* Floating Badge 2: Homologado MTC */}
+                {/* Floating badge: Homologado */}
                 <motion.div
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute top-12 sm:top-14 -right-2 sm:-right-4 bg-white/95 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 flex items-center gap-3 z-20"
+                  animate={{ y: [0, 7, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+                  className="absolute top-14 -right-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-3 z-20"
                 >
-                  <span className="w-10 h-10 rounded-xl bg-[#158cca] flex items-center justify-center text-white shrink-0 shadow-sm" aria-hidden="true">
-                    <ShieldCheck size={20} className="stroke-[2.5]" />
+                  <span className="w-11 h-11 rounded-xl bg-[#158cca] flex items-center justify-center text-white shrink-0" aria-hidden="true">
+                    <ShieldCheck size={22} />
                   </span>
                   <div>
-                    <div className="text-sm sm:text-base font-extrabold text-[#0f172a] leading-none">100% Homologado</div>
-                    <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Validez Nacional MTC</div>
+                    <div className="text-base font-extrabold text-[#0f172a] leading-none">100% Homologado</div>
+                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Validez Nacional MTC</div>
                   </div>
                 </motion.div>
-
               </div>
             </motion.div>
 
@@ -743,16 +707,6 @@ export default function Home() {
               )
             })}
           </motion.div>
-
-          <div className="mt-10 text-center">
-            <Link
-              href="/sedes"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-slate-300 px-6 text-sm font-semibold text-[#0f172a] transition-colors hover:border-[#158cca] hover:text-[#158cca] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#158cca] focus-visible:ring-offset-2"
-            >
-              <Search size={17} aria-hidden="true" />
-              Ver todas las sedes
-            </Link>
-          </div>
         </div>
       </section>
 
