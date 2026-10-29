@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'leaflet/dist/leaflet.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -171,23 +172,6 @@
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-.leaflet-tooltip-left:before {
-  border-left-color: #0f172a;
-}
-.leaflet-tooltip-right:before {
-  border-right-color: #0f172a;
-}
-
-.custom-pin-marker {
-  background: transparent !important;
-  border: none !important;
-}
-
-.pin-container {
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
-  transition: transform 0.3s ease;
-}
-
 .pin-container:hover {
   transform: scale(1.1) translateY(-2px);
 }
@@ -226,4 +210,26 @@
   100% {
     transform: rotate(1turn);
   }
+}
+
+
+/* ─── Leaflet: protección contra resets de Tailwind ─────────────────────────
+   Tailwind 4 aplica max-width: 100% a todas las imágenes y box-sizing a
+   todos los elementos, lo que puede romper la carga de tiles de Leaflet.
+   Estas reglas restauran el comportamiento esperado por Leaflet. */
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.leaflet-container img.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+  box-shadow: none !important;
+}
+
+.leaflet-tile {
+  visibility: inherit !important;
 }

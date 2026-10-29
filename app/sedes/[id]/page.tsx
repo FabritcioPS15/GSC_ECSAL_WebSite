@@ -16,6 +16,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { SiGooglemaps, SiWaze } from 'react-icons/si'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import MapaSedeClient from '@/components/directorio/mapa-sede-client'
 import {
   CENTROS,
   EVALUACIONES,
@@ -313,6 +314,15 @@ export default async function SedePage({
                   <FaWhatsapp size={17} aria-hidden="true" />
                   Escribir por WhatsApp
                 </a>
+              </div>
+
+              <div className="mt-5">
+                <MapaSedeClient
+                  centros={[centro]}
+                  sedeSeleccionadaId={centro.id}
+                  height="260px"
+                  zoom={16}
+                />
               </div>
             </div>
 

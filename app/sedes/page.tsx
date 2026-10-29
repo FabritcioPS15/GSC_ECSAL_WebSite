@@ -1,6 +1,7 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {
   CalendarCheck,
@@ -17,11 +18,25 @@ import {
   Stethoscope,
   Brain,
   X,
+  Map as MapIcon,
+  LayoutGrid,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { CentroCard } from '@/components/directorio/centro-card'
+
+const MapaSedes = dynamic(() => import('@/components/directorio/mapa-sedes'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[460px] w-full items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-400">
+      <div className="flex flex-col items-center gap-2">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-[#1176ab]" />
+        <span className="text-xs font-medium text-slate-500">Cargando mapa...</span>
+      </div>
+    </div>
+  ),
+})
 import {
   CENTROS,
   CIUDADES,
@@ -50,6 +65,7 @@ export default function Directorio() {
   const [query, setQuery] = useState('')
   const [ciudad, setCiudad] = useState('todas')
   const [soloSabado, setSoloSabado] = useState(false)
+  const [vista, setVista] = useState<'cuadricula' | 'mapa'>('cuadricula')
 
   useEffect(() => {
     const busquedaInicial = new URLSearchParams(window.location.search).get('q')
@@ -246,15 +262,74 @@ export default function Directorio() {
                   Limpiar filtros
                 </button>
               )}
+
+              <div className="flex items-center rounded-md border border-slate-300 bg-slate-100 p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setVista('cuadricula')}
+                  className={`inline-flex h-10 items-center gap-1.5 rounded px-3 text-xs font-semibold transition-all ${
+                    vista === 'cuadricula'
+                      ? 'bg-white text-[#1176ab] shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                  aria-label="Ver en cuadrícula"
+                >
+                  <LayoutGrid size={15} />
+                  <span>Tarjetas</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVista('mapa')}
+                  className={`inline-flex h-10 items-center gap-1.5 rounded px-3 text-xs font-semibold transition-all ${
+                    vista === 'mapa'
+                      ? 'bg-white text-[#1176ab] shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                  aria-label="Ver en mapa interactivo"
+                >
+                  <MapIcon size={15} />
+                  <span>Mapa</span>
+                </button>
+              </div>
             </div>
           </div>
 
           {resultados.length > 0 ? (
-            <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
-              {resultados.map((centro) => (
-                <CentroCard key={centro.id} centro={centro} />
-              ))}
-            </div>
+            vista === 'cuadricula' ? (
+              <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
+                {resultados.map((centro) => (
+                  <CentroCard key={centro.id} centro={centro} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <MapaSedes centros={resultados} height="520px" />
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {resultados.map((centro) => (
+                    <div
+                      key={centro.id}
+                      className="rounded-lg border border-slate-200 bg-white p-3.5 shadow-sm transition hover:border-[#158cca]"
+                    >
+                      <span className="rounded bg-[#1176ab]/10 px-2 py-0.5 text-[10px] font-semibold text-[#1176ab]">
+                        {centro.ciudad}
+                      </span>
+                      <h4 className="mt-1 font-semibold text-slate-900 text-sm">
+                        {centro.nombre}
+                      </h4>
+                      <p className="mt-1 text-xs text-slate-500 line-clamp-1">
+                        {centro.direccion}
+                      </p>
+                      <Link
+                        href={`/sedes/${centro.id}`}
+                        className="mt-2.5 inline-flex items-center gap-1 text-xs font-semibold text-[#1176ab] hover:underline"
+                      >
+                        Ver detalles completos &rarr;
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
           ) : (
             <div className="rounded-xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
               <Search size={28} className="mx-auto mb-3 text-slate-400" aria-hidden="true" />
