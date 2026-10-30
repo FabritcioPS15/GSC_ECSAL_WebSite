@@ -21,8 +21,8 @@ export default function Contacto() {
   const sedes = [
     {
       name: 'Sede Lima (Izaguirre)',
-      whatsapp: '51999888777',
-      mobile: '+51 999 888 777',
+      whatsapp: '51966600891',
+      mobile: '+51 966 600 891',
       email: 'info@sanluismedic.pe',
       altEmail: 'atencion@corporacionsanluismedic.pe',
       schedule: 'Lunes a Sábado',
@@ -30,8 +30,8 @@ export default function Contacto() {
     },
     {
       name: 'Sede Andahuaylas',
-      whatsapp: '51944777666',
-      mobile: '+51 944 777 666',
+      whatsapp: '51941971060',
+      mobile: '+51 941 971 060',
       email: 'andahuaylas@sanluismedic.pe',
       altEmail: 'consultas@sanluismedic.pe',
       schedule: 'Lunes a Sábado',
@@ -39,8 +39,8 @@ export default function Contacto() {
     },
     {
       name: 'Sede Ayacucho',
-      whatsapp: '51944666555',
-      mobile: '+51 944 666 555',
+      whatsapp: '51947992807',
+      mobile: '+51 947 992 807',
       email: 'ayacucho@sanluismedic.pe',
       altEmail: 'recepcion@sanluismedic.pe',
       schedule: 'Lunes a Sábado',
@@ -181,7 +181,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                   className="space-y-12"
                 >
                   <div>
-                    <h2 className="text-2xl font-black text-[#0f172a] uppercase tracking-tighter mb-8 flex items-center gap-3">
+                    <h2 className="text-2xl md:text-3xl font-black text-[#0f172a] uppercase tracking-tighter mb-8 flex items-center gap-3">
                       <span className="w-8 h-1 bg-[#158cca]"></span>
                       Datos de {currentSede.name}
                     </h2>
@@ -227,7 +227,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 -rotate-45 translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-colors" />
                     <div className="flex items-center gap-4 mb-6 relative z-10">
                       <MessageSquare size={32} />
-                      <h3 className="text-xl font-black uppercase tracking-tighter">Atención Inmediata</h3>
+                      <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter">Atención Inmediata</h3>
                     </div>
                     <p className="text-white/80 text-sm mb-8 font-medium leading-relaxed relative z-10">
                       ¿Necesitas agendar ahora mismo en la <strong>{currentSede.name}</strong>? Nuestro canal de WhatsApp está activo para darte respuesta en menos de 5 minutos.
@@ -257,7 +257,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
             {/* Contact Form */}
             <div className="relative">
               <div className={`bg-slate-50 p-12 border border-slate-100 shadow-sm transition-all duration-500 ${selectedSede === null ? 'opacity-40 pointer-events-none grayscale' : 'opacity-100'}`}>
-                <h3 className="text-2xl font-black text-[#0f172a] uppercase tracking-tighter mb-8">Envíanos un Mensaje</h3>
+                <h3 className="text-2xl md:text-3xl font-black text-[#0f172a] uppercase tracking-tighter mb-8">Envíanos un Mensaje</h3>
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -266,7 +266,7 @@ ${mensaje ? `- *Mensaje:* ${mensaje}` : ''}`
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Teléfono / WhatsApp</label>
-                      <input name="telefono" value={formData.telefono} onChange={handleInputChange} required type="text" disabled={selectedSede === null} className="w-full bg-white border border-slate-200 h-12 px-4 text-sm font-bold focus:outline-none focus:border-[#158cca] transition-colors disabled:cursor-not-allowed" placeholder="999 888 777" />
+                      <input name="telefono" value={formData.telefono} onChange={handleInputChange} required type="text" disabled={selectedSede === null} className="w-full bg-white border border-slate-200 h-12 px-4 text-sm font-bold focus:outline-none focus:border-[#158cca] transition-colors disabled:cursor-not-allowed" placeholder="966 600 891" />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">

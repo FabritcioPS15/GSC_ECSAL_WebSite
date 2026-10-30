@@ -36,9 +36,9 @@ function ServiceContent() {
   const sedeParam = searchParams.get('sede');
   
   const sedes = [
-    { name: 'Lima - Izaguirre', whatsapp: '51999888777', address: 'Av. Carlos Izaguirre 108, Independencia' },
-    { name: 'Andahuaylas', whatsapp: '944777666', address: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas' },
-    { name: 'Ayacucho', whatsapp: '944666555', address: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho' }
+    { name: 'Lima - Izaguirre', whatsapp: '51966600891', address: 'Av. Carlos Izaguirre 108, Independencia' },
+    { name: 'Andahuaylas', whatsapp: '51941971060', address: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas' },
+    { name: 'Ayacucho', whatsapp: '51947992807', address: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho' }
   ];
 
   const [selectedSede, setSelectedSede] = useState(sedes[0]);

@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { ArrowRight, Check, ChevronRight, MapPin, Star, Clock, Stethoscope, AlertCircle, ChevronDown, Search, ShieldCheck, CreditCard } from 'lucide-react'
+import { ArrowRight, Check, ChevronRight, MapPin, Star, Clock, Stethoscope, AlertCircle, ChevronDown, Search, CreditCard } from 'lucide-react'
 import { motion, Variants } from 'framer-motion'
 import Image from 'next/image'
 import { FaWhatsapp, FaFlask, FaBrain, FaEye, FaStethoscope, FaFileMedical } from 'react-icons/fa'
@@ -38,33 +38,61 @@ const HERO_SLIDES = [
   {
     src: '/servicios/moto.webp',
     alt: 'Examen médico para licencia de moto - categoría A1',
+    kicker: 'Centro médico autorizado por el MTC',
     title: 'Licencia de Moto',
     subtitle: 'Categoría A1',
-    description: 'Obtén tu brevete de moto en tan solo 2.5 horas. Evaluación médica completa y certificado oficial MTC.',
+    lead: 'El examen médico de aptitud para tu brevete, sin filas innecesarias.',
+    description: 'Completa laboratorio, visión, psicología y evaluación general en una sola visita. Al aprobar, emitimos el certificado digital y lo cargamos al sistema del MTC para que continúes tu trámite con respaldo oficial.',
+    points: [
+      'Proceso completo en aproximadamente 2.5 horas',
+      'Certificado digital con carga inmediata al MTC',
+      'Atención en Lima, Andahuaylas y Ayacucho',
+    ],
     cta: 'Reservar Cita Moto'
   },
   {
     src: '/servicios/revalidacion.webp',
     alt: 'Revalidación de brevete - renovación de licencia de conducir',
+    kicker: 'Renovación de licencia de conducir',
     title: 'Revalidación',
-    subtitle: 'Renueva tu Brevete',
-    description: 'Revalida tu licencia de conducir de forma rápida y sencilla. Sistema directo al MTC.',
+    subtitle: 'Mantén tu brevete vigente',
+    lead: 'Renueva a tiempo y sigue conduciendo con tu certificado al día.',
+    description: 'Revalidamos tu licencia con la misma rigurosidad médica exigida por el MTC, en un circuito ordenado y con resultados el mismo día. Te orientamos si hay observaciones y te entregamos el certificado listo para el sistema nacional.',
+    points: [
+      'Trámite ágil con DNI y licencia anterior',
+      'Resultado el mismo día, con firma biométrica',
+      'Sedes homologadas y personal especializado',
+    ],
     cta: 'Revalidar Ahora'
   },
   {
     src: '/servicios/recategorizacion.webp',
     alt: 'Recategorización de licencia de conducir - cambio de categoría',
+    kicker: 'Cambio de categoría vehicular',
     title: 'Recategorización',
-    subtitle: 'Cambia tu Categoría',
-    description: 'Actualiza tu licencia de conducir a otra categoría. Proceso ágil y 100% oficial.',
+    subtitle: 'Da el siguiente paso en tu licencia',
+    lead: 'Actualiza tu categoría con una evaluación médica completa y oficial.',
+    description: 'Si necesitas pasar a otra categoría, realizamos el perfil médico que exige el MTC y te acompañamos en cada estación del examen. El objetivo es un proceso claro, seguro y con respaldo institucional desde el primer momento.',
+    points: [
+      'Evaluación alineada a la categoría que solicitas',
+      'Circuito médico en un solo local',
+      'Orientación si el resultado queda observado',
+    ],
     cta: 'Recategorizar'
   },
   {
     src: '/servicios/nuevo-ai.webp',
     alt: 'Licencia de conducir nueva con tecnología de IA',
+    kicker: 'Primera licencia de conducir',
     title: 'Licencia Nueva',
-    subtitle: 'Primera Licencia',
-    description: 'Obtén tu primera licencia de conducir con evaluación médica moderna y tecnología avanzada.',
+    subtitle: 'Empieza a conducir con respaldo médico',
+    lead: 'Tu primer certificado de aptitud, con tecnología y un equipo que te guía.',
+    description: 'Si es tu primera licencia, te recibimos con un flujo simple: te explicamos cada prueba, evaluamos tu aptitud física y psicológica, y emitimos el certificado digital para que inicies tu trámite ante el MTC con confianza.',
+    points: [
+      'Acompañamiento para postulantes nuevos',
+      'Equipos modernos en visión, lab y psicología',
+      'Más de 15 años certificando conductores',
+    ],
     cta: 'Sacar Licencia'
   },
 ]
@@ -106,9 +134,9 @@ export default function Home() {
   }, [])
 
   const sedes = [
-    { name: 'Sede Lima (Independencia)', whatsapp: '51999888777', address: 'Av. Carlos Izaguirre 108, Independencia' },
-    { name: 'Sede Andahuaylas', whatsapp: '51944777666', address: 'Jr. Alfonso Ugarte N.º 354' },
-    { name: 'Sede Ayacucho', whatsapp: '51944666555', address: 'Jr. José Santos Chocano N° 410' }
+    { name: 'Sede Lima (Independencia)', whatsapp: '51966600891', address: 'Av. Carlos Izaguirre 108, Independencia' },
+    { name: 'Sede Andahuaylas', whatsapp: '51941971060', address: 'Jr. Alfonso Ugarte N.º 354' },
+    { name: 'Sede Ayacucho', whatsapp: '51947992807', address: 'Jr. José Santos Chocano N° 410' }
   ];
 
   const getWhatsAppUrl = (message: string, whatsapp: string) => {
@@ -197,7 +225,7 @@ export default function Home() {
     <div className="w-full bg-slate-50 font-sans text-slate-900 selection:bg-[#158cca] selection:text-white">
       {/* Floating WhatsApp Button */}
       <motion.a
-        href="https://wa.me/51999999999"
+        href="https://wa.me/51966600891"
         target="_blank"
         rel="noreferrer"
         aria-label="Contactar por WhatsApp"
@@ -214,120 +242,126 @@ export default function Home() {
       <Navbar active={activeSection} home />
 
       {/* Section 1: Hero */}
-      <section className="relative min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] flex items-center overflow-hidden">
-        {/* === SPLIT HERO DESIGN === */}
-        <div className="absolute inset-0 flex">
-          {/* Left side - Solid color */}
-          <div className="w-full lg:w-1/2 bg-[#0a1525] relative z-10" />
-
-          {/* Right side - Image slideshow with overlay */}
-          <div className="hidden lg:block w-1/2 relative">
-            {HERO_SLIDES.map((slide, idx) => (
-              <motion.div
-                key={slide.src}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: heroSlideIndex === idx ? 1 : 0 }}
-                transition={{ duration: 1, ease: 'easeInOut' }}
-                className="absolute inset-0"
-              >
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  sizes="50vw"
-                  className="object-cover object-center"
-                  priority={idx === 0}
-                />
-                <div className="absolute inset-0 bg-[#0a1525]/40" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile - Full image background with overlay */}
-        <div className="lg:hidden absolute inset-0 z-0">
+      <section className="relative min-h-[92vh] md:min-h-[85vh] lg:min-h-[88vh] flex items-center bg-[#0f172a]">
+        {/* Background Image Slideshow: anclada a la derecha para que su parte visible no quede tapada */}
+        <div className="absolute inset-y-0 right-0 w-full md:w-[50%] lg:w-[48%] z-0">
           {HERO_SLIDES.map((slide, idx) => (
             <motion.div
               key={slide.src}
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: heroSlideIndex === idx ? 1 : 0 }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-              className="absolute inset-0"
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+              className="absolute inset-0 pointer-events-none"
             >
               <Image
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                sizes="100vw"
-                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-right"
                 priority={idx === 0}
               />
-              <div className="absolute inset-0 bg-[#0a1525]/70" />
             </motion.div>
           ))}
+
+          {/* Degradado suave justo donde la imagen se encuentra con el fondo sólido de la izquierda */}
+          <div 
+            className="hidden md:block absolute inset-y-0 left-0 w-36 lg:w-48 bg-gradient-to-r from-[#0f172a] via-[#0f172a]/75 to-transparent z-[1] pointer-events-none" 
+            aria-hidden="true" 
+          />
         </div>
 
-        {/* Ambient background */}
-        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute -left-24 -top-32 h-[520px] w-[520px] rounded-full bg-[#158cca]/15 blur-[130px]" />
-          <div className="absolute -right-20 bottom-0 h-[440px] w-[440px] rounded-full bg-[#5ec4f0]/10 blur-[140px]" />
+        {/* Degradado corporativo con los colores principales de la marca (#0f172a y matices de #158cca) */}
+        <div 
+          className="hidden md:block absolute inset-0 z-[1] bg-gradient-to-r from-[#0f172a] from-50% via-[#0f172a]/95 via-65% to-transparent pointer-events-none" 
+          aria-hidden="true" 
+        />
+
+        {/* Móvil: velo oscuro para garantizar legibilidad completa */}
+        <div 
+          className="absolute inset-0 z-[1] bg-gradient-to-t from-[#0f172a] via-[#0f172a]/95 to-[#0f172a]/75 md:hidden pointer-events-none" 
+          aria-hidden="true" 
+        />
+
+        {/* Velos superior e inferior */}
+        <div 
+          className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0f172a] to-transparent z-[1] pointer-events-none" 
+          aria-hidden="true" 
+        />
+        <div 
+          className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#0f172a]/70 to-transparent z-[1] pointer-events-none" 
+          aria-hidden="true" 
+        />
+
+        {/* Ambient glow effects con los colores corporativos (#158cca y #a3c435) */}
+        <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
+          <div className="absolute -left-20 top-1/4 h-[500px] w-[500px] rounded-full bg-[#158cca]/15 blur-[140px]" />
+          <div className="absolute left-1/3 bottom-0 h-[320px] w-[320px] rounded-full bg-[#a3c435]/10 blur-[130px]" />
+          <div className="absolute right-10 bottom-10 h-[380px] w-[380px] rounded-full bg-[#158cca]/10 blur-[130px]" />
         </div>
 
         {/* Slide indicator dots */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20" aria-label="Slides del hero">
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20" aria-label="Slides del hero">
           {HERO_SLIDES.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setHeroSlideIndex(idx)}
               aria-label={`Slide ${idx + 1}: ${HERO_SLIDES[idx].title}`}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                heroSlideIndex === idx
-                  ? 'bg-white w-6'
-                  : 'bg-white/40 hover:bg-white/70'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${heroSlideIndex === idx
+                ? 'bg-[#158cca] w-8 shadow-sm shadow-[#158cca]/50'
+                : 'bg-white/40 hover:bg-white/80 w-2.5'
+                }`}
             />
           ))}
         </div>
 
         {/* === CONTENT === */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-12 sm:pt-16 lg:pt-16 pb-16 sm:pb-20 lg:pb-20">
-          <div className="grid xl:grid-cols-12 gap-10 xl:gap-14 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-12 pb-28 sm:py-16 lg:py-24">
+          <div className="max-w-2xl lg:max-w-[40rem]">
 
             {/* Left Content Column */}
             <motion.div
               key={heroSlideIndex}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="w-full xl:col-span-7 flex flex-col items-start"
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full flex flex-col items-start"
             >
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-semibold mb-5">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22c55e] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#22c55e]"></span>
-                </span>
-                <span className="text-[#7dd3f5] font-bold">MTC & SUSALUD</span>
-                <span className="h-3 w-px bg-white/30" aria-hidden="true"></span>
-                <span className="text-white/80 font-medium">Centro Médico Autorizado</span>
-              </div>
 
-              {/* Main Heading - Dynamic based on slide */}
-              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-extrabold text-white leading-[1.08] tracking-tight mb-3 text-balance drop-shadow-sm">
+              <p className="mb-5 flex items-center gap-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.28em] text-[#a3c435]">
+                <span className="h-px w-8 bg-[#a3c435]" aria-hidden="true" />
+                {HERO_SLIDES[heroSlideIndex].kicker}
+              </p>
+
+              <h1 className="font-heading text-[2.35rem] sm:text-5xl md:text-6xl lg:text-[4.15rem] font-extrabold text-white leading-[1.05] tracking-tight text-balance">
                 {HERO_SLIDES[heroSlideIndex].title}
               </h1>
 
-              {/* Subtitle */}
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#5ec4f0] mb-5">
+              <p className="mt-3 text-lg sm:text-xl md:text-2xl font-semibold text-[#5ec4f0] tracking-tight">
                 {HERO_SLIDES[heroSlideIndex].subtitle}
-              </h2>
+              </p>
 
-              {/* Value prop - Dynamic based on slide */}
-              <p className="text-white/75 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl font-normal mb-7">
+              <p className="mt-4 max-w-xl text-base sm:text-lg font-medium leading-snug text-white/90">
+                {HERO_SLIDES[heroSlideIndex].lead}
+              </p>
+
+              <span className="mt-5 mb-5 h-px w-16 bg-gradient-to-r from-[#158cca] to-transparent" aria-hidden="true" />
+
+              <p className="mb-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-relaxed text-white/72">
                 {HERO_SLIDES[heroSlideIndex].description}
               </p>
+
+              <ul className="mb-8 space-y-2.5 text-[13px] sm:text-sm text-white/70">
+                {HERO_SLIDES[heroSlideIndex].points.map((point) => (
+                  <li key={point} className="flex items-start gap-2.5">
+                    <Check size={16} className="mt-0.5 shrink-0 text-[#a3c435]" strokeWidth={2.5} aria-hidden="true" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full mb-7">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full mb-8">
                 <div ref={heroDropdownRef} className="relative w-full sm:w-auto">
                   <Button
                     onClick={() => setIsHeroDropdownOpen(!isHeroDropdownOpen)}
@@ -383,84 +417,17 @@ export default function Home() {
                 </Link>
               </div>
               {/* Social proof */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-5 pt-4 border-t border-white/15 w-full max-w-xl text-xs text-white/60">
-                <div className="flex items-center gap-1.5">
-                  <div className="flex">
+              <p className="mt-1 pt-5 border-t border-white/12 w-full max-w-xl text-[12px] sm:text-[13px] leading-relaxed text-white/55">
+                <span className="inline-flex items-center gap-1.5 align-middle mr-1.5">
+                  <span className="inline-flex" aria-hidden="true">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
+                      <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
                     ))}
-                  </div>
-                  <span className="font-bold text-white/90">4.9 / 5</span>
-                </div>
-                <span className="w-1 h-1 rounded-full bg-white/30" aria-hidden="true" />
-                <span>+50,000 certificados emitidos</span>
-                <span className="w-1 h-1 rounded-full bg-white/30" aria-hidden="true" />
-                <div className="relative w-24 h-6 brightness-[3] opacity-70 hover:opacity-100 transition-opacity">
-                  <Image
-                    src="/MTC.webp"
-                    alt="MTC Autorizado"
-                    fill
-                    sizes="96px"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right Column: service photo card */}
-            <motion.div
-              initial={{ opacity: 1, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-              className="w-full xl:col-span-5"
-            >
-              <div className="relative mx-auto w-full max-w-md xl:max-w-none">
-                <div
-                  className="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-[#158cca]/25 via-[#a3c435]/10 to-transparent blur-2xl"
-                  aria-hidden="true"
-                />
-                <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-white/15 shadow-2xl shadow-black/50">
-                  {HERO_SLIDES.map((slide, idx) => (
-                    <motion.div
-                      key={slide.src}
-                      initial={idx === 0 ? false : { opacity: 0 }}
-                      animate={{ opacity: heroSlideIndex === idx ? 1 : 0 }}
-                      transition={{ duration: 0.9, ease: 'easeInOut' }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={slide.src}
-                        alt={slide.alt}
-                        fill
-                        sizes="(max-width: 1280px) 90vw, 40vw"
-                        className="object-cover object-center"
-                        priority={idx === 0}
-                      />
-                    </motion.div>
-                  ))}
-
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a1525]/65 via-transparent to-transparent"
-                    aria-hidden="true"
-                  />
-
-                  {/* Slide indicator dots */}
-                  <div className="absolute inset-x-0 bottom-5 flex justify-center gap-2" aria-label="Fotos de servicios">
-                    {HERO_SLIDES.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setHeroSlideIndex(idx)}
-                        aria-label={`Foto ${idx + 1}`}
-                        className={`h-2 rounded-full transition-all duration-300 ${
-                          heroSlideIndex === idx
-                            ? 'w-6 bg-white'
-                            : 'w-2 bg-white/50 hover:bg-white/80'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+                  </span>
+                  <span className="font-semibold text-white/85">4.9 / 5</span>
+                </span>
+                en atención · +50,000 certificados emitidos · Homologados por el MTC
+              </p>
             </motion.div>
           </div>
         </div>
@@ -481,25 +448,25 @@ export default function Home() {
               CONÓCENOS
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Corporación San Luis Medic</h2>
-            <p className="text-slate-600 text-lg">Más de 15 años liderando evaluaciones médicas para conductores en el Perú, con cobertura nacional y compromiso con la seguridad vial.</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-6">Corporación San Luis Medic</h2>
+            <p className="text-slate-600 text-base">Más de 15 años liderando evaluaciones médicas para conductores en el Perú, con cobertura nacional y compromiso con la seguridad vial.</p>
           </motion.div>
 
           <div id="stats-section" className="grid md:grid-cols-3 gap-8 mb-12" aria-live="polite" aria-atomic="true">
             <div className="text-center">
-              <p className="text-4xl font-bold text-[#158cca] mb-2">
+              <p className="text-4xl md:text-5xl font-bold text-[#158cca] mb-2">
                 {counters.years}+
               </p>
               <p className="text-sm text-slate-600">Años de experiencia</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-[#158cca] mb-2">
+              <p className="text-4xl md:text-5xl font-bold text-[#158cca] mb-2">
                 + {formatMiles(counters.clients)}
               </p>
               <p className="text-sm text-slate-600">Conductores certificados</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-[#158cca] mb-2">
+              <p className="text-4xl md:text-5xl font-bold text-[#158cca] mb-2">
                 {counters.branches}
               </p>
               <p className="text-sm text-slate-600">Sedes a nivel nacional</p>
@@ -508,7 +475,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-[#0f172a] mb-6">Líderes en Evaluaciones Médicas</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#0f172a] mb-6">Líderes en Evaluaciones Médicas</h3>
               <p className="text-slate-600 mb-6 leading-relaxed">
                 Como Corporación San Luis Medic, nos enorgullece ser la red más grande de centros médicos especializados en evaluaciones para licencias de conducir, con presencia estratégica en Lima y provincias.
               </p>
@@ -544,185 +511,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 3: Misión, Visión y Valores */}
-      <section className="py-16 px-4 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-            className="text-center max-w-3xl mx-auto mb-12"
-          >
-            <p className="text-xs text-[#a3c435] font-bold mb-3 uppercase tracking-widest flex items-center gap-2 justify-center">
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-              NUESTRA IDENTIDAD
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-            </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Misión, Visión y Valores</h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Misión */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow"
-            >
-              <div className="w-16 h-16 bg-[#158cca]/10 rounded-2xl flex items-center justify-center mb-6">
-                <FaStethoscope size={32} className="text-[#158cca]" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#0f172a] mb-4">Misión</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Brindar servicios médicos de evaluación psicosomática de excelencia, con tecnología de punta y personal altamente calificado, garantizando la seguridad vial de los conductores peruanos.
-              </p>
-            </motion.div>
-
-            {/* Visión */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow"
-            >
-              <div className="w-16 h-16 bg-[#a3c435]/10 rounded-2xl flex items-center justify-center mb-6">
-                <Star size={32} className="text-[#a3c435]" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#0f172a] mb-4">Visión</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Ser la red líder de centros médicos especializados en evaluaciones para licencias de conducir en el Perú, reconocidos por nuestra calidad, innovación y compromiso con la seguridad vial.
-              </p>
-            </motion.div>
-
-            {/* Valores */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow"
-            >
-              <div className="w-16 h-16 bg-[#5ec4f0]/10 rounded-2xl flex items-center justify-center mb-6">
-                <ShieldCheck size={32} className="text-[#5ec4f0]" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#0f172a] mb-4">Valores</h3>
-              <ul className="text-slate-600 leading-relaxed space-y-2">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#a3c435] rounded-full" />
-                  Integridad y honestidad
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#a3c435] rounded-full" />
-                  Excelencia en el servicio
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#a3c435] rounded-full" />
-                  Compromiso con la seguridad
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#a3c435] rounded-full" />
-                  Innovación tecnológica
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Nuestras Instalaciones */}
-      <section className="py-16 px-4 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-            className="text-center max-w-3xl mx-auto mb-12"
-          >
-            <p className="text-xs text-[#a3c435] font-bold mb-3 uppercase tracking-widest flex items-center gap-2 justify-center">
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-              INFRAESTRUCTURA
-              <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
-            </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Nuestras Instalaciones</h2>
-            <p className="text-slate-600 text-lg">
-              Contamos con instalaciones modernas y equipadas con tecnología de última generación para brindarte un servicio de calidad.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: <FaFlask size={24} />,
-                title: 'Laboratorio Clínico',
-                description: 'Equipamiento moderno para análisis de sangre y orina'
-              },
-              {
-                icon: <FaEye size={24} />,
-                title: 'Oftalmología',
-                description: 'Equipos de última generación para evaluación visual'
-              },
-              {
-                icon: <FaBrain size={24} />,
-                title: 'Psicología',
-                description: 'Pruebas psicotécnicas computarizadas'
-              },
-              {
-                icon: <FaStethoscope size={24} />,
-                title: 'Consultorios Médicos',
-                description: 'Ambientes cómodos y privados para tu evaluación'
-              }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-[#158cca]/30 transition-colors group"
-              >
-                <div className="w-14 h-14 bg-[#158cca]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#158cca]/20 transition-colors">
-                  <span className="text-[#158cca]">{item.icon}</span>
-                </div>
-                <h3 className="text-lg font-bold text-[#0f172a] mb-2">{item.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-12 bg-gradient-to-r from-[#158cca] to-[#1176ab] rounded-2xl p-8 md:p-12 text-white"
-          >
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-4">Instalaciones Certificadas por el MTC</h3>
-                <p className="text-white/90 leading-relaxed">
-                  Todas nuestras sedes cumplen con los estándares de calidad y seguridad exigidos por el Ministerio de Transportes y Comunicaciones y la Superintendencia de Salud.
-                </p>
-              </div>
-              <div className="flex justify-center md:justify-end">
-                <div className="relative w-32 h-12 brightness-[3]">
-                  <Image
-                    src="/MTC.webp"
-                    alt="Certificado MTC"
-                    fill
-                    sizes="128px"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Section 6: Proceso de Evaluación MTC */}
       <section id="proceso" className="py-16 px-4 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
@@ -737,7 +525,7 @@ export default function Home() {
               <span className="w-8 h-0.5 bg-[#a3c435]" aria-hidden="true"></span>
               EXAMEN MÉDICO DE APTITUD
             </p>
-            <h3 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Proceso de Evaluación MTC</h3>
+            <h3 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-6">Proceso de Evaluación MTC</h3>
             <p className="text-slate-500 text-base max-w-3xl leading-relaxed">
               Nuestras evaluaciones cumplen estrictamente con la Directiva N° 001-2023-MTC/18, garantizando un perfil de conductor apto y seguro.
             </p>
@@ -812,7 +600,7 @@ export default function Home() {
                 <Check size={28} className="text-[#0f172a]" strokeWidth={3} />
               </span>
               <div>
-                <h4 className="text-xl font-bold text-white mb-3">Resultado: Aprobado</h4>
+                <h4 className="text-xl md:text-2xl font-bold text-white mb-3">Resultado: Aprobado</h4>
                 <p className="text-slate-400 text-sm leading-relaxed">
                   Se emite el Certificado Médico Digital inmediatamente después de la firma biométrica, habilitando su carga al sistema nacional del MTC.
                 </p>
@@ -825,13 +613,13 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.12 }}
-              className="bg-white p-10 rounded-none border border-slate-100 flex items-center gap-8 shadow-sm"
+              className="bg-white p-4 rounded-none border border-slate-100 flex items-center gap-8 shadow-sm"
             >
               <span className="w-14 h-14 bg-blue-50 rounded-none flex items-center justify-center flex-shrink-0" aria-hidden="true">
                 <AlertCircle size={24} className="text-[#158cca]" />
               </span>
               <div>
-                <h4 className="text-xl font-bold text-[#0f172a] mb-3">Resultado: Observado</h4>
+                <h4 className="text-xl md:text-2xl font-bold text-[#0f172a] mb-3">Resultado: Observado</h4>
                 <p className="text-slate-500 text-sm leading-relaxed">
                   El postulante recibirá indicaciones médicas específicas para subsanar la observación (ej. uso de lentes, tratamiento especializado) antes de continuar.
                 </p>
@@ -856,8 +644,8 @@ export default function Home() {
               Nuestras Sedes
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Elige la sede que prefieras</h2>
-            <p className="text-slate-600 text-lg">Cada sede cuenta con su propio tarifario, horarios y canales de atención. Ingresa para ver toda la información.</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-6">Elige la sede que prefieras</h2>
+            <p className="text-slate-600 text-base">Cada sede cuenta con su propio tarifario, horarios y canales de atención. Ingresa para ver toda la información.</p>
           </motion.div>
 
           <motion.div
@@ -883,7 +671,7 @@ export default function Home() {
                   {/* Initial View */}
                   <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white px-8 text-center z-10 transition-all duration-500 ${abierto ? '-translate-y-full' : 'group-hover:-translate-y-full'}`}>
                     <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#158cca]">{centro.ciudad}</span>
-                    <h3 className="mt-3 text-3xl font-black uppercase tracking-tighter text-[#0f172a]">{centro.distrito}</h3>
+                    <h3 className="mt-3 text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#0f172a]">{centro.distrito}</h3>
                     <div className="mt-5 h-px w-12 bg-[#a3c435]" aria-hidden="true"></div>
                     <p className="mt-5 text-sm font-normal leading-relaxed text-slate-600">{centro.direccion}</p>
                     <Link
@@ -902,7 +690,7 @@ export default function Home() {
                   <div className={`absolute inset-0 flex flex-col justify-between bg-[#0f172a] p-8 z-20 transition-all duration-500 delay-100 ${abierto ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto'}`}>
                     <div>
                       <span className="text-xs font-bold uppercase tracking-widest text-[#a3c435]">Sede {centro.ciudad}</span>
-                      <h3 className="mt-2 text-2xl font-black uppercase tracking-tighter text-white">{centro.nombre}</h3>
+                      <h3 className="mt-2 text-xl md:text-2xl font-black uppercase tracking-tighter text-white">{centro.nombre}</h3>
                       <p className="mt-4 flex items-start gap-2 text-sm font-normal leading-relaxed text-white/70">
                         <MapPin size={16} className="mt-0.5 shrink-0 text-[#a3c435]" aria-hidden="true" />
                         <span>{centro.direccion}</span>
@@ -956,8 +744,8 @@ export default function Home() {
               UBICACIONES
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Ubícanos en el mapa</h2>
-            <p className="text-slate-600 text-lg">Explora la ubicación de cada sede y abre la ruta en Google Maps o Waze.</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-6">Ubícanos en el mapa</h2>
+            <p className="text-slate-600 text-base">Explora la ubicación de cada sede y abre la ruta en Google Maps o Waze.</p>
             <Link
               href="/sedes"
               className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#158cca] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0f172a]"
@@ -985,7 +773,7 @@ export default function Home() {
                 <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
                 GRUPO SAN LUIS
               </p>
-              <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-8">Unidades de Negocio</h2>
+              <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-8">Unidades de Negocio</h2>
             </motion.div>
           </div>
 
@@ -1015,7 +803,7 @@ export default function Home() {
               {/* Content - Initially Hidden, Shown on Hover */}
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                 <div className="text-center px-8">
-                  <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Revisiones Técnicas</h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-white mb-4">Revisiones Técnicas</h3>
                   <p className="text-white/90 text-sm mb-6 max-w-md">Inspección vehicular completa para garantizar la seguridad y cumplimiento de normativas.</p>
                   <ul className="flex flex-col space-y-2 text-white/80 text-sm">
                     <li className="flex items-center justify-center gap-2"><Check size={16} className="text-green-400" aria-hidden="true" /> Certificación MTC</li>
@@ -1063,7 +851,7 @@ export default function Home() {
               {/* Content - Initially Hidden, Shown on Hover */}
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                 <div className="text-center px-8">
-                  <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Escuela de Conductores</h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-white mb-4">Escuela de Conductores</h3>
                   <p className="text-white/90 text-sm mb-6 max-w-md">Formación integral para conductores responsables y seguros en las vías.</p>
                   <ul className="flex flex-col space-y-2 text-white/80 text-sm">
                     <li className="flex items-center justify-center gap-2"><Check size={16} className="text-green-400" aria-hidden="true" /> Clases teóricas y prácticas</li>
@@ -1105,7 +893,7 @@ export default function Home() {
               DUDAS
               <span className="w-6 h-px bg-[#a3c435]" aria-hidden="true"></span>
             </p>
-            <h2 className="font-heading text-4xl font-extrabold text-[#0f172a] mb-6">Preguntas Frecuentes</h2>
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[#0f172a] mb-6">Preguntas Frecuentes</h2>
           </motion.div>
 
           <Accordion type="single" collapsible className="w-full">

@@ -5,7 +5,7 @@ export const LEGAL_ENTITY = {
   email: 'info@sanluismedic.pe',
   dataEmail: 'atencion@corporacionsanluismedic.pe',
   phone: '+51 1 642 9971',
-  whatsapp: '+51 999 888 777',
+  whatsapp: '+51 966 600 891',
   website: 'https://sanluismedic.pe',
   updated: '29 de octubre de 2026',
 }

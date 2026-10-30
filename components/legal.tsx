@@ -288,7 +288,7 @@ export function LegalContactBlock({ email = LEGAL_ENTITY.dataEmail }: { email?: 
       <p>
         Teléfono: <a href="tel:+5116429971" className="text-[#158cca] font-bold hover:underline">{LEGAL_ENTITY.phone}</a>
         {' · '}WhatsApp:{' '}
-        <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="text-[#158cca] font-bold hover:underline">
+        <a href="https://wa.me/51966600891" target="_blank" rel="noreferrer" className="text-[#158cca] font-bold hover:underline">
           {LEGAL_ENTITY.whatsapp}
         </a>
       </p>

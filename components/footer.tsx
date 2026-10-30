@@ -25,7 +25,7 @@ export function Footer() {
               Corporación líder en evaluaciones médicas certificadas por el MTC para licencias de conducir. Brindamos confianza, rapidez y seguridad vial a nivel nacional con más de 15 años de experiencia.
             </p>
             <div className="flex gap-3">
-              <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="w-10 h-10 bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition-all duration-300 hover:-translate-y-1">
+              <a href="https://wa.me/51966600891" target="_blank" rel="noreferrer" className="w-10 h-10 bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition-all duration-300 hover:-translate-y-1">
                 <FaWhatsapp size={18} />
               </a>
               <a href="#" className="w-10 h-10 bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-[#1877f2] hover:border-[#1877f2] transition-all duration-300 hover:-translate-y-1">

@@ -6,6 +6,8 @@ export type Centro = {
   direccion: string
   telefonoHref: string
   whatsapp: string
+  tiktok: string
+  facebook: string
   horario: string
   abreSabado: boolean
   servicios: string[]
@@ -84,7 +86,9 @@ export const CENTROS: Centro[] = [
     distrito: 'Independencia',
     direccion: 'Av. Carlos Izaguirre 108, Independencia 15311',
     telefonoHref: 'tel:+5116429971',
-    whatsapp: '51999888777',
+    whatsapp: '51966600891',
+    tiktok: 'https://www.tiktok.com/@sanluismediclima',
+    facebook: 'https://www.facebook.com/profile.php?id=61575655906856',
     horario: 'Lunes a sábado, 8:00 a 18:00',
     abreSabado: true,
     servicios: SERVICIOS_BASE,
@@ -100,7 +104,9 @@ export const CENTROS: Centro[] = [
     distrito: 'Andahuaylas',
     direccion: 'Jr. Alfonso Ugarte N.º 354, frente a la ex UGEL Andahuaylas',
     telefonoHref: 'tel:+5154234567',
-    whatsapp: '51944777666',
+    whatsapp: '51941971060',
+    tiktok: 'https://www.tiktok.com/@sancristobal_andahuaylas',
+    facebook: 'https://www.facebook.com/sanluismedicandahuaylas',
     horario: 'Lunes a sábado, 9:00 a 18:00',
     abreSabado: true,
     servicios: SERVICIOS_BASE,
@@ -116,7 +122,9 @@ export const CENTROS: Centro[] = [
     distrito: 'Jesús Nazareno',
     direccion: 'Jr. José Santos Chocano N.º 410, Jesús Nazareno, Huamanga',
     telefonoHref: 'tel:+5144345678',
-    whatsapp: '51944666555',
+    whatsapp: '51947992807',
+    tiktok: 'https://www.tiktok.com/@brevetesapurimac410',
+    facebook: 'https://www.facebook.com/profile.php?id=61558734843609',
     horario: 'Lunes a viernes, 8:00 a 17:00',
     abreSabado: false,
     servicios: SERVICIOS_BASE,

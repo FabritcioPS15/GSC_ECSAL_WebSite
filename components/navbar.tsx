@@ -39,8 +39,8 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
         <div className="bg-[#0f172a] text-white text-[11px] py-2.5 px-4 hidden md:block">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center gap-6 font-medium">
-              <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-[#a3c435] transition-colors">
-                <FaWhatsapp size={14} className="text-[#a3c435]" /> +51 999 888 777
+              <a href="https://wa.me/51966600891" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-[#a3c435] transition-colors">
+                <FaWhatsapp size={14} className="text-[#a3c435]" /> +51 966 600 891
               </a>
               <a href="mailto:info@sanluismedic.pe" className="flex items-center gap-2 hover:text-[#a3c435] transition-colors">
                 <Mail size={14} className="text-[#a3c435]" /> info@sanluismedic.pe
@@ -136,7 +136,9 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
           <div className="relative w-full h-full flex flex-col">
             {/* Mobile Menu Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-700">
-              <Image src="/Slmlogo.webp" alt="San Luis Medic Logo" width={240} height={70} className="h-10 w-auto" sizes="240px" loading="lazy" />
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                <Image src="/sanluismedichorizontal.png" alt="San Luis Medic Logo" width={240} height={100} className="h-14 w-auto" sizes="240px" />
+              </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center justify-center w-12 h-12 bg-white/10 text-white hover:bg-white/20 transition-colors"
@@ -191,7 +193,7 @@ export function Navbar({ active, home = false, dark = false }: NavbarProps) {
                   <span>Av. Carlos Izaguirre 108, Independencia</span>
                 </div>
                 <div className="flex items-center gap-3 pt-2">
-                  <a href="https://wa.me/51999888777" target="_blank" rel="noreferrer" className="text-white hover:text-[#25D366] transition-colors">
+                  <a href="https://wa.me/51966600891" target="_blank" rel="noreferrer" className="text-white hover:text-[#25D366] transition-colors">
                     <FaWhatsapp size={20} />
                   </a>
                   <a href="#" className="text-white hover:text-[#1877f2] transition-colors">

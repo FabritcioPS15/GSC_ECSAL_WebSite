@@ -18,21 +18,21 @@ const sedesData = [
   {
     name: 'Sede Lima (Izaguirre)',
     address: 'Av. Carlos Izaguirre 108, Independencia 15311',
-    whatsapp: '999 888 777',
+    whatsapp: '966 600 891',
     hours: 'Lun-Sáb: 8am - 6pm',
     mapQuery: 'Av. Carlos Izaguirre 108, Independencia',
   },
   {
     name: 'Sede Andahuaylas',
     address: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas',
-    whatsapp: '944 777 666',
+    whatsapp: '941 971 060',
     hours: 'Lun-Sáb: 9am - 6pm',
     mapQuery: 'Jr. Alfonso Ugarte N.º. 354 frente ex Ugel Andahuaylas',
   },
   {
     name: 'Sede Ayacucho',
     address: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho',
-    whatsapp: '944 666 555',
+    whatsapp: '947 992 807',
     hours: 'Lun-Vie: 8am - 5pm',
     mapQuery: 'Jr. José Santos Chocano N°410, Jesús Nazareno-Huamanga-Ayacucho',
   },
@@ -107,7 +107,7 @@ export default function MapSection() {
       {/* Columna del mapa — overflow-hidden para contener el mapa,
           height explícito con px para que Leaflet lo mida correctamente */}
       <div
-        className="lg:col-span-2 border border-slate-100 shadow-xl relative overflow-hidden"
+        className="lg:col-span-2 border border-slate-100 shadow-xl relative z-0 overflow-hidden"
         style={{ height: '500px' }}
       >
         <MapContainer

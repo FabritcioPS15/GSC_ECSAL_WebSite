@@ -82,7 +82,7 @@ export default function Servicios() {
                 <div className="w-16 h-16 bg-[#158cca] text-white flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-black text-[#0f172a] uppercase tracking-tighter mb-4 leading-tight">
+                <h3 className="text-xl md:text-2xl font-black text-[#0f172a] uppercase tracking-tighter mb-4 leading-tight">
                   {service.title}
                 </h3>
                 <p className="text-slate-600 text-sm mb-8 flex-grow leading-relaxed font-medium">
@@ -111,7 +111,7 @@ export default function Servicios() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-black text-[#0f172a] uppercase tracking-tighter mb-6">¿Por qué elegirnos?</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-[#0f172a] uppercase tracking-tighter mb-6">¿Por qué elegirnos?</h2>
               <div className="space-y-4">
                 {[
                   "Resultados en tiempo real con el MTC",
@@ -131,7 +131,7 @@ export default function Servicios() {
             </div>
             <div className="relative h-[300px] bg-[#158cca] overflow-hidden flex items-center justify-center p-12 text-center">
               <div className="relative z-10">
-                <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-6">¿Tienes dudas adicionales?</h3>
+                <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-6">¿Tienes dudas adicionales?</h3>
                 <Link href="/contacto">
                   <Button className="bg-white text-[#158cca] hover:bg-[#0f172a] hover:text-white font-black px-8 h-12 rounded-none transition-all uppercase text-xs tracking-widest">
                     Consulta con un asesor

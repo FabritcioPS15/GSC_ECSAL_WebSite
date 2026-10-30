@@ -111,7 +111,7 @@ export default function MapaSedes({
 
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm ${className}`}
+      className={`relative z-0 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm ${className}`}
       style={{ height }}
     >
       <MapContainer

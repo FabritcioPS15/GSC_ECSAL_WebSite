@@ -12,7 +12,7 @@ import {
   Navigation,
   Phone,
 } from 'lucide-react'
-import { FaWhatsapp } from 'react-icons/fa'
+import { FaFacebookF, FaTiktok, FaWhatsapp } from 'react-icons/fa'
 import { SiGooglemaps, SiWaze } from 'react-icons/si'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
@@ -313,6 +313,26 @@ export default async function SedePage({
                 >
                   <FaWhatsapp size={17} aria-hidden="true" />
                   Escribir por WhatsApp
+                </a>
+                <a
+                  href={centro.tiktok}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`TikTok de ${centro.nombre}`}
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-slate-300 bg-white text-sm font-semibold text-[#0f172a] transition-colors hover:border-[#158cca] hover:text-[#158cca]"
+                >
+                  <FaTiktok size={15} aria-hidden="true" />
+                  TikTok
+                </a>
+                <a
+                  href={centro.facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Facebook de ${centro.nombre}`}
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-slate-300 bg-white text-sm font-semibold text-[#0f172a] transition-colors hover:border-[#158cca] hover:text-[#158cca]"
+                >
+                  <FaFacebookF size={15} aria-hidden="true" />
+                  Facebook
                 </a>
               </div>
 

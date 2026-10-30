@@ -210,10 +210,10 @@ export default function Directorio() {
 
           <div className="mb-6 flex flex-col gap-4 border-b border-slate-100 pb-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+              <h2 className="text-3xl font-bold text-[#0f172a] md:text-4xl">
                 Sedes disponibles
               </h2>
-              <p className="mt-1 text-sm font-normal text-slate-600" aria-live="polite">
+              <p className="mt-1 text-base font-normal text-slate-600" aria-live="polite">
                 {resultados.length} de {CENTROS.length} sedes encontradas
                 {hayFiltros ? ' con los filtros aplicados' : ''}.
               </p>
@@ -221,19 +221,14 @@ export default function Directorio() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div>
-                <label
-                  htmlFor="filtro-ciudad"
-                  className="mb-1 block text-xs font-medium text-slate-600"
-                >
-                  Ciudad
-                </label>
+
                 <select
                   id="filtro-ciudad"
                   value={ciudad}
                   onChange={(event) => setCiudad(event.target.value)}
                   className="h-11 w-full rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-[#0f172a] focus:border-[#158cca] focus:outline-none focus:ring-2 focus:ring-[#158cca]/30 sm:w-44"
                 >
-                  <option value="todas">Todas las ciudades</option>
+                  <option value="todas">Todas las sedes</option>
                   {CIUDADES.map((opcion) => (
                     <option key={opcion} value={opcion}>
                       {opcion}
@@ -241,17 +236,6 @@ export default function Directorio() {
                   ))}
                 </select>
               </div>
-
-              <label className="flex h-11 cursor-pointer items-center gap-2 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-700 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#158cca]/30">
-                <input
-                  type="checkbox"
-                  checked={soloSabado}
-                  onChange={(event) => setSoloSabado(event.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 accent-[#1176ab] focus:ring-[#158cca]"
-                />
-                Abre los sábados
-              </label>
-
               {hayFiltros && (
                 <button
                   type="button"
@@ -333,7 +317,7 @@ export default function Directorio() {
           ) : (
             <div className="rounded-xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
               <Search size={28} className="mx-auto mb-3 text-slate-400" aria-hidden="true" />
-              <h3 className="text-lg font-semibold text-[#0f172a]">
+              <h3 className="text-lg md:text-xl font-semibold text-[#0f172a]">
                 No encontramos sedes con esos criterios
               </h3>
               <p className="mx-auto mt-2 max-w-md text-sm font-normal text-slate-600">
@@ -366,10 +350,10 @@ export default function Directorio() {
       <section className="border-t border-slate-100 bg-slate-50 px-4 py-12 md:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 max-w-2xl">
-            <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+            <h2 className="text-3xl font-bold text-[#0f172a] md:text-4xl">
               Tarifario de referencia
             </h2>
-            <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600">
+            <p className="mt-2 text-base font-normal leading-relaxed text-slate-600">
               El examen médico tiene una tarifa única para nuevos trámites, revalidación, canje
               extranjero y recategorización de licencias de moto y carro.
             </p>
@@ -406,10 +390,10 @@ export default function Directorio() {
       <section className="border-t border-slate-100 px-4 py-12 md:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 max-w-2xl">
-            <h2 className="text-2xl font-bold text-[#0f172a] md:text-3xl">
+            <h2 className="text-3xl font-bold text-[#0f172a] md:text-4xl">
               Cómo es el examen médico
             </h2>
-            <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600">
+            <p className="mt-2 text-base font-normal leading-relaxed text-slate-600">
               El proceso incluye las siguientes etapas. La duración indicada corresponde al tiempo
               de cada evaluación.
             </p>
@@ -429,7 +413,7 @@ export default function Directorio() {
                     {evaluacion.duracion}
                   </span>
                 </div>
-                <h3 className="text-base font-semibold text-[#0f172a]">
+                <h3 className="text-xl md:text-2xl font-semibold text-[#0f172a]">
                   {evaluacion.titulo}
                 </h3>
                 <p className="mt-1.5 text-sm font-normal leading-relaxed text-slate-600">
@@ -444,10 +428,10 @@ export default function Directorio() {
       <section className="border-t border-slate-100 bg-[#0f172a] px-4 py-12 md:py-14">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div>
-            <h2 className="text-2xl font-bold text-white md:text-3xl">
+            <h2 className="text-3xl font-bold text-white md:text-4xl">
               ¿Necesitas ayuda para elegir una sede?
             </h2>
-            <p className="mt-2 max-w-xl text-sm font-normal leading-relaxed text-slate-300">
+            <p className="mt-2 max-w-xl text-base font-normal leading-relaxed text-slate-300">
               Escríbenos y te orientamos sobre disponibilidad, requisitos y horarios de atención.
             </p>
           </div>
